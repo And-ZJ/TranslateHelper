@@ -1,0 +1,46 @@
+@charset "UTF-8";
+#replace_line {
+
+    display: inline-block;
+    border: 1px solid mediumslateblue;
+    border-radius: 4px;
+    background-color: aliceblue;
+    color: darkcyan;
+    font-size: 14px;
+    margin: 0 10px;
+    padding: 0 5px;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+#replace_line.baidu {
+    height: 30px;
+    line-height: 30px;
+    float: none;
+}
+
+#replace_line.google {
+    height: 27px;
+    line-height: 27px;
+    float: right;
+}
+
+#replace_line:hover {
+    background-color: lavender;
+}
+
+div.performance {
+    color: red;
+    position: absolute;
+    z-index: 100;
+    font-size: 14px;
+    padding: 0 5px;
+    cursor: default;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}

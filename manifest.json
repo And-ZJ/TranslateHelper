@@ -1,0 +1,27 @@
+{
+  "name": "翻译助手",
+  "version": "0.3",
+  "manifest_version": 2,
+  "description": "在百度翻译和谷歌翻译页面。按下Backspace键，输入框获取焦点；按下tab键，再按下Enter键，可发音；按下“除换行”键，可去除待翻译文本框中的换行。",
+  "icons": {
+    "128": "icon.png"
+  },
+  "offline_enabled": true,
+  "short_name": "翻译助手",
+  "content_scripts": [
+    {
+      "matches": [
+        "*://fanyi.baidu.com/*",
+        "*://translate.google.cn/*",
+        "*://translate.google.com.hk/*"
+      ],
+      "js": [
+        "jquery-1.8.2.min.js",
+		"app.js"
+      ],
+	  "css": [
+		"app.css"
+	  ]
+    }
+  ]
+}

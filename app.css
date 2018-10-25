@@ -1,6 +1,5 @@
 @charset "UTF-8";
 #replace_line {
-
     display: inline-block;
     border: 1px solid mediumslateblue;
     border-radius: 4px;
@@ -25,7 +24,23 @@
 #replace_line.google {
     height: 27px;
     line-height: 27px;
+    float: left;
+}
+
+#replace_line.googleCN {
+    height: 27px;
+    line-height: 27px;
     float: right;
+    margin-top: 10px;
+    margin-right: 40px;
+}
+
+#replace_line.youdao {
+    font-size: 16px;
+    vertical-align: middle;
+    height: 36px;
+    line-height: 36px;
+    float:none;
 }
 
 #replace_line:hover {

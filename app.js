@@ -25,6 +25,10 @@ function DelayResponse(delayFun, parameter, timeDelay) {
 }
 
 function listenSound(selector) {
+    if (selector == null)
+    {
+        return;
+    }
     var sound = $(selector).first();
     if (sound.css("display") == "block") {
         sound.focus();
@@ -43,20 +47,21 @@ function replaceLineClickPerformance() {
     })
 }
 
+function isGoogleTranslateCNPage(href)
+{
+    return href.search("translate.google.cn") > -1
+}
+
 function isGoogleTranslatePage(href) {
-    return href.search("translate.google.cn") > -1 || href.search("translate.google.com") > -1;
+    return href.search("translate.google.com") > -1;
 }
 
 function isBaiduTranslatePage(href) {
     return href.search("fanyi.baidu.com") > -1;
 }
 
-function isBaiduSearchResultPage(href) {
-    return href.search("www.baidu.com") > -1;
-}
-
-function isBaiduZhidaoPage(href) {
-    return href.search("zhidao.baidu.com") > -1;
+function isYouDaoTranslatePage(href){
+    return href.search("fanyi.youdao.com") > -1;
 }
 
 
@@ -71,25 +76,43 @@ function addHelper() {
     var listenEleSelector = null;
 
     if (isBaiduTranslatePage(href)) {
+        // 百度翻译
+        // https://fanyi.baidu.com/
         replaceLineEle = "<div id='replace_line' class='baidu'>除换行</div>";
         insertEle = $(".trans-operation").last();
         inputEdit = $("textarea#baidu_translate_input");
         listenEleSelector = "div.input-operate a";
     }
     else if (isGoogleTranslatePage(href)) {
+        // 谷歌翻译
+        // https://translate.google.com 以及 https://translate.google.com.hk 等
         replaceLineEle = "<div id='replace_line' class='google'>除换行</div>";
-        insertEle = $("#gt-lang-src");
+        insertEle = $("#gt-lang-right"); //$("#gt-lang-src");
         inputEdit = $("textarea#source");
         listenEleSelector = "div#gt-src-listen";
     }
+    else if (isGoogleTranslateCNPage(href)) {
+        // 谷歌翻译中国区
+        // https://translate.google.cn/
+        replaceLineEle = "<div id='replace_line' class='googleCN'>除换行</div>";
+        insertEle = $(".sl-wrap"); //$("#gt-lang-src");
+        inputEdit = $("textarea#source");
+        listenEleSelector = "div.src-tts";
+    }
+    else if (isYouDaoTranslatePage(href)){
+        // 有道翻译
+        replaceLineEle = "<div id='replace_line' class='youdao'>除换行</div>";
+        insertEle = $(".fanyi__operations--left");
+        inputEdit = $("textarea#inputOriginal");
+        // 有道翻译页面未找到发音按钮
+        listenEleSelector = null;
+        console.log("有道翻译页面未找到发音按钮");
+    }
     else {
-        if (isBaiduSearchResultPage(href)) {
-            return;
-        }
         console.log("翻译助手插件无法起作用：网址不匹配。");
         return;
     }
-    if (replaceLineEle == null || insertEle == null || inputEdit == null || listenEleSelector == null) {
+    if (replaceLineEle == null || insertEle == null || inputEdit == null) {
         console.log("翻译助手插件无法起作用：页面元素匹配失败。");
         return;
     }
@@ -132,47 +155,8 @@ function addHelper() {
     hasHelper = true;
 }
 
-var num;
-
-function baiduSearchBtnClickFun() {
-    $("input#su").click(function () {
-        num = $("div#content_left div").length;
-        console.log(num);
-        setTimeout(removeBaiduSearchAd, 500);
-    });
-}
-
-function removeBaiduSearchAd() {
-    console.log($("div#content_left").children().length);
-    $("div#content_left").children().each(function () {
-        var th = $(this);
-        if (th.find('span[data-tuiguang]').length > 0) {
-            //console.log("mark");
-            th.remove();
-        }
-        else {
-            console.log(th.find("span.m").length);
-            th.find("span.m").css({
-                "background": "yellow",
-                "z-index": "99"
-            });
-        }
-    });
-    console.log($('span[data-tuiguang]').length);
-    $('span[data-tuiguang]').css({
-        "background": "yellow",
-        "z-index": "99"
-    });
-    num = $("div#content_left div").length;
-    console.log(num);
-}
-
 setTimeout(addHelper, 10000);
 
 $(document).ready(function () {
     addHelper();
-    // if (isBaiduSearchResultPage(window.location.href)) {
-    //     baiduSearchBtnClickFun();
-    //     removeBaiduSearchAd();
-    // }
 });

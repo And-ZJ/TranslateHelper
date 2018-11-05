@@ -87,17 +87,17 @@ function addHelper() {
         // 谷歌翻译
         // https://translate.google.com 以及 https://translate.google.com.hk 等
         replaceLineEle = "<div id='replace_line' class='google'>除换行</div>";
-        insertEle = $("#gt-lang-right"); //$("#gt-lang-src");
+        insertEle = $("#gt-lang-right");
         inputEdit = $("textarea#source");
         listenEleSelector = "div#gt-src-listen";
     }
     else if (isGoogleTranslateCNPage(href)) {
         // 谷歌翻译中国区
         // https://translate.google.cn/
-        replaceLineEle = "<div id='replace_line' class='googleCN'>除换行</div>";
-        insertEle = $(".sl-wrap"); //$("#gt-lang-src");
+        replaceLineEle = "<div id='replace_line' class='google'>除换行</div>";
+        insertEle = $("#gt-lang-right"); //$(".sl-wrap"); 
         inputEdit = $("textarea#source");
-        listenEleSelector = "div.src-tts";
+        listenEleSelector = "div#gt-src-listen"; //"div.src-tts";
     }
     else if (isYouDaoTranslatePage(href)){
         // 有道翻译
@@ -117,7 +117,15 @@ function addHelper() {
         return;
     }
 
-    insertEle.append(replaceLineEle);
+    // 谷歌翻译界面有时候存在无法出现“除换行”按钮的情况，若页面并未改版，并且多次刷新界面还是没有用，可考虑以下解决方案：
+    // 第一步：将第127行前面的双斜杠‘//’去除
+    // 第二步：将第128行前面添加双斜杠‘//’
+    // 第三步：打开浏览器的拓展插件管理界面，重新加载本插件。
+    // 第四步：打开相关翻译界面，查看是否解决问题。
+    // 注意：勿改动本代码文件的其他代码。
+    // 若页面改版，或此法不生效，可联系作者。
+    //insertEle.html(insertEle.html()+replaceLineEle) // 去除本行最前面的双斜杠‘//’
+    insertEle.append(replaceLineEle);               // 本行最前面添加双斜杠‘//’
 
     var tabDownResponse = new DelayResponse(listenSound, listenEleSelector, 100);
 
@@ -152,6 +160,7 @@ function addHelper() {
 
     });
     console.log("翻译助手插件已启用");
+    console.log("若未出现‘除换行’按钮，请查看附带的'README.rst'文件");
     hasHelper = true;
 }
 

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <style>
+        body {
+            font-size: 16px;
+            width: 800px;
+            height: 600px;
+            padding: 10px;
+        }
+    </style>
+    <link rel="stylesheet" href="bootstrap-4.1.3/css/bootstrap.min.css">
+    <title>翻译助手插件的配置页</title>
+</head>
+<body>
+<ul class="list-group">
+    <li class="list-group-item">
+        <div>作者邮箱：<a href="mailto:ZJ.Cosmos@gmail.com">ZJ.Cosmos@gmail.com</a>
+          本插件地址：<a href="https://github.com/And-ZJ/TranslateHelper">GitHub</a></div>
+    </li>
+    <li class="list-group-item">
+        <div><label><input id="replaceFunction" type="checkbox"/> 除换行功能</label></div>
+        <span>提示：若谷歌翻译网页改版，请尝试调整“版本”。若不出现“除换行”按钮，请尝试调整“嵌入模式”。若仍不可用，可联系作者，或查看GitHub上是否已更新版本。</span>
+        <ul class="list-group">
+            <li class="list-group-item">
+                <div class="translatePageSetting google">
+                    <input type="checkbox" class="check"/>
+                    <span class="name"><a href="https://translate.google.com/">谷歌翻译</a></span>
+                    <label>嵌入模式：<select class="mode">
+                        <option value="append">append模式</option>
+                        <option value="html">html模式</option>
+                    </select>
+                    </label>
+                    <label>版本：<select class="version">
+                        <option value="new1">新版 2018-11-29</option>
+                        <option value="old">旧版</option>
+                    </select>
+                    </label>
+                </div>
+            </li>
+            <li class="list-group-item">
+                <div class="translatePageSetting googleCN">
+                    <input type="checkbox" class="check"/>
+                    <span class="name"><a href="https://translate.google.cn/">谷歌翻译中国区</a></span>
+                    <label>嵌入模式：<select class="mode">
+                        <option value="append">append模式</option>
+                        <option value="html">html模式</option>
+                    </select>
+                    </label>
+                    <label>版本：<select class="version">
+                        <option value="new1">新版 2018-11-29</option>
+                        <option value="old">旧版</option>
+                    </select>
+                    </label>
+                </div>
+            </li>
+            <li class="list-group-item">
+                <div class="translatePageSetting googleCNHK">
+                    <input type="checkbox" class="check"/>
+                    <span class="name"><a href="https://translate.google.com.hk/">谷歌翻译中国香港区</a></span>
+                    <label>嵌入模式：<select class="mode">
+                        <option value="append">append模式</option>
+                        <option value="html">html模式</option>
+                    </select>
+                    </label>
+                    <label>版本：<select class="version">
+                        <option value="new1">新版 2018-11-29</option>
+                        <option value="old">旧版</option>
+                    </select>
+                    </label>
+                </div>
+            </li>
+            <li class="list-group-item">
+                <div class="translatePageSetting baidu">
+                    <input type="checkbox" class="check"/>
+                    <span class="name"><a href="https://fanyi.baidu.com/">百度翻译</a></span>
+                    <label>嵌入模式：<select class="mode">
+                        <option value="append">append模式</option>
+                        <option value="html">html模式</option>
+                    </select>
+                    </label>
+                </div>
+            </li>
+            <li class="list-group-item">
+                <div class="translatePageSetting youdao">
+                    <input type="checkbox" class="check"/>
+                    <span class="name"><a href="http://fanyi.youdao.com/">有道翻译</a></span>
+                    <label>嵌入模式：<select class="mode">
+                        <option value="append">append模式</option>
+                        <option value="html">html模式</option>
+                    </select>
+                    </label>
+                </div>
+            </li>
+        </ul>
+    </li>
+    <li class="list-group-item">
+        <div><label><input id="replaceKeyFunction" type="checkbox"/> 除换行功能的快捷键（除换行功能禁用，并不会导致此快捷键被禁用，反之同理。）</label></div>
+        <label>输入快捷键：<input id="keyValue" type="text" value="ctrl+/"/>例如：ctrl+shift+z。若设置enter键，请输入return。勿输入中文字符。
+            若和浏览器已有快捷键相同，则无法正常使用本功能。</label>
+        <div><button id="keyTest">测试</button> 点击测试，然后按下快捷键，应提示“检测到快捷键”，否则，表示快捷键设置失败。</div>
+    </li>
+    <li class="list-group-item">
+        <div><label><input id="forceFunction" type="checkbox"/> 按backspace键焦点回到输入框功能</label></div>
+    </li>
+    <li class="list-group-item">
+        <div><label><input id="speechFunction" type="checkbox"/> 先按tab键，再按enter键可发音功能</label></div>
+    </li>
+    <li class="list-group-item">
+        <div><label><input id="clearFunction" type="checkbox"/> 同时按下shift+backspace键，清空输入框功能</label></div>
+    </li>
+</ul>
+<div>
+    <button id="saveConfig" type="button" class="btn-primary text-dark">保存配置</button>
+    <button id="restoreConfig" type="button" class="btn-primary text-dark">恢复默认</button>
+</div>
+
+<div style="width: 100%;height: 50px;">
+    <span id="hint" style="color: red"></span>
+</div>
+<script type="text/javascript" charset="UTF-8" src="js/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" charset="UTF-8" src="js/jquery.hotkeys.js"></script>
+<script type="text/javascript" charset="UTF-8" src="js/config.js"></script>
+<script type="text/javascript" charset="UTF-8" src="js/options.js"></script>
+</body>
+</html>

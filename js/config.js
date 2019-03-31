@@ -34,6 +34,9 @@ var defaultConfig = {
         'check': true,
         'keyValue': "ctrl+/"
     },
+    'copyTransFunction': {
+        'check': true
+    },
     'forceFunction': {
         'check': false
     },

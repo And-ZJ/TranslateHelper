@@ -4,6 +4,13 @@ var KEY_SHIFT = 16;
 
 //延时响应
 function DelayResponse(delayFun, parameter, timeDelay) {
+    /**
+     * 延时响应。并且只响应一次。
+     * 若某次还未响应，则多次调用并不会多次触发，仍只触发最早的那次。
+     * delayFun：需要延时响应的函数
+     * parameter：给delayFun传递的参数
+     * timeDelay：延时时长
+     */
     var oneTimeout = null;
     var timeoutFun = function () {
         if (oneTimeout != null) {
@@ -21,7 +28,7 @@ function DelayResponse(delayFun, parameter, timeDelay) {
     }
 }
 
-// 发音获取焦点
+// 发音，获取页面上发音元素的焦点
 function listenSound(selector) {
     if (selector == null) {
         return;
@@ -33,11 +40,11 @@ function listenSound(selector) {
     }
 }
 
-function replaceLineClickPerformance() {
-    // 实现点击之后，显示并删除“已去除”字样
-    var top = $("#replace_line").offset().top;
-    var left = $("#replace_line").offset().left;
-    var performanceEle = '<div class="performance" style="top:' + (top - 20) + 'px;left:' + left + 'px">已去除</div>';
+function clickPerformance(ele,text){
+    // 实现点击之后，显示提示字符
+    var top = $(ele).offset().top;
+    var left = $(ele).offset().left;
+    var performanceEle = '<div class="performance" style="top:' + (top - 20) + 'px;left:' + left + 'px">' + text + '</div>';
     $('body').append(performanceEle);
     $('div.performance').animate({'top': top - 60}, 'slow', function () {
         $(this).remove();
@@ -65,16 +72,37 @@ function isYouDaoTranslatePage(href) {
     return href.search("fanyi.youdao.com") > -1;
 }
 
+// 标识当前是哪个翻译界面
 var currentPage = null;
+
+// 使用何种版本识别页面元素
 var version = null;
+
+// 按钮嵌入页面的方式
 var mode = null;
+
+// 插入页面的按钮放在该框内（解决在谷歌翻译页面不方便排版的问题）
+var helperBtnGroupEle = null;
+
+// 除换行按钮
 var replaceLineEle = null;
+
+// 复制按钮
+var copyTransEle = null;
+
+// 插入“除换行”和“复制”按钮的地方
 var insertEle = null;
+
+// 翻译界面的文字输入框
 var inputEdit = null;
+
+// 页面上的发音按钮
 var listenEleSelector = null;
 
+// 识别当前是哪个翻译界面，用于匹配相应的输入框
 function matchElement(href, config) {
     if (isGoogleTranslatePage(href)) {
+        // 谷歌翻译界面
         if (isGoogleTranslateCNPage(href)) {
             currentPage = 'googleCN';
         }
@@ -90,33 +118,45 @@ function matchElement(href, config) {
             insertEle = $("div.sl-wrap");
             inputEdit = $("textarea#source");
             listenEleSelector = "div.src-tts";
+            helperBtnGroupEle = '<div id="helper_btn_group" class="googleNew1"></div>';
             replaceLineEle = "<div id='replace_line' class='googleNew1'>除换行</div>";
+            copyTransEle = "<div id='copy_trans' class='googleNew1' data-clipboard-action='copy'" +
+                " data-clipboard-target='.result-shield-container.tlid-copy-target'>复制</div>";
         }
         else if (version == 'old') {
             insertEle = $("#gt-lang-right");
             inputEdit = $("textarea#source");
             listenEleSelector = "div#gt-src-listen";
+            helperBtnGroupEle = '<div id="helper_btn_group" class="google"></div>';
             replaceLineEle = "<div id='replace_line' class='google'>除换行</div>";
+            copyTransEle = "<div id='copy_trans' class='google' data-clipboard-action='copy'" +
+                " data-clipboard-target='.result-shield-container.tlid-copy-target'>复制</div>";
         }
     }
     else if (isBaiduTranslatePage(href)) {
         // 百度翻译
         currentPage = 'baidu';
         // console.log("翻译助手：百度翻译页面");
-        replaceLineEle = "<div id='replace_line' class='baidu'>除换行</div>";
         insertEle = $(".trans-operation").last();
         inputEdit = $("textarea#baidu_translate_input");
         listenEleSelector = "div.input-operate a";
+        helperBtnGroupEle = '<div id="helper_btn_group" class="baidu"></div>';
+        replaceLineEle = "<div id='replace_line' class='baidu'>除换行</div>";
+        copyTransEle = "<div id='copy_trans' class='baidu' data-clipboard-action='copy'" +
+            " data-clipboard-target='.output-bd'>复制</div>";
     }
     else if (isYouDaoTranslatePage(href)) {
         // 有道翻译
         currentPage = 'youdao';
         // console.log("翻译助手：有道翻译页面");
-        replaceLineEle = "<div id='replace_line' class='youdao'>除换行</div>";
         insertEle = $(".fanyi__operations--left");
         inputEdit = $("textarea#inputOriginal");
-        // 有道翻译页面未找到发音按钮
         listenEleSelector = null;
+        helperBtnGroupEle = '<div id="helper_btn_group" class="youdao"></div>';
+        replaceLineEle = "<div id='replace_line' class='youdao'>除换行</div>";
+        copyTransEle = "<div id='copy_trans' class='youdao' data-clipboard-action='copy'" +
+            " data-clipboard-target='#transTarget'>复制</div>";
+        // 有道翻译页面未找到发音按钮
         console.log("翻译助手：有道翻译页面未找到发音按钮");
     }
     if (!currentPage)
@@ -125,6 +165,18 @@ function matchElement(href, config) {
         return false;
     }
     return true;
+}
+
+// 在页面插入存放“除换行”“复制”按钮的框框
+function insertHelperBtnGroup(config) {
+    mode = config.replaceFunction.pageSetting[currentPage].mode;
+    if (mode == "append") {
+        insertEle.append(helperBtnGroupEle);
+    }
+    else if (mode == "html") {
+        insertEle.html(insertEle.html() + helperBtnGroupEle)
+    }
+    helperBtnGroupEle = $('#helper_btn_group')
 }
 
 
@@ -138,23 +190,59 @@ function activateReplaceFunction(config) {
         return;
     }
     // console.log("activateReplaceFunction");
-    mode = config.replaceFunction.pageSetting[currentPage].mode;
     if (mode == "append") {
-        insertEle.append(replaceLineEle);
+        helperBtnGroupEle.append(replaceLineEle);
     }
     else if (mode == "html") {
-        insertEle.html(insertEle.html() + replaceLineEle)
+        helperBtnGroupEle.html(helperBtnGroupEle.html() + replaceLineEle)
     }
 
     $("#replace_line").click(function () {
-        // 点击“除换行”按钮，可自动去除待翻译文本中的大量换行符和空格（两个变成一个）。
-        var text = inputEdit.val();
-        var after_replace_text = text.replace(/\n/g, " ").replace(/  /g, " ");
-        inputEdit.val(after_replace_text);
-        replaceLineClickPerformance();
+        // 点击“除换行”按钮，可自动去除待翻译文本中的大量换行符和空格（连续空格会变一个）。
+        var replaced_text = inputEdit.val();
+        if (/.*[\u4e00-\u9fa5]+.*$/.test(replaced_text)){
+            // 如果有中文，则将换行删除。
+            // 此处可能误判，以后改进
+            replaced_text = replaced_text.replace(/\n/g,''); 
+        }
+        else{
+            // 如果不含中文，则将换行替换成空格
+            replaced_text = replaced_text.replace(/\n/g,' '); 
+        }
+        // 将连续空格替换成单空格
+        replaced_text = replaced_text.replace(/  /g, ' ');
+        
+        inputEdit.val(replaced_text);
+        // replaceLineClickPerformance();
+        clickPerformance(this,"已去除");
     });
     console.log("翻译助手：若未出现‘除换行’按钮，请右键点击本插件图标，在“选项”中尝试使用其他方式。");
 }
+// “复制到剪贴板”功能
+function activateCopyTransFunction(config) {
+    if (!config.copyTransFunction.check){
+        return;
+    }
+    if (!ClipboardJS.isSupported()){
+        console.log("当前浏览器不支持复制到剪贴板功能");
+        return;
+    }
+    if (mode == "append") {
+        helperBtnGroupEle.append(copyTransEle);
+    }
+    else if (mode == "html") {
+        helperBtnGroupEle.html(helperBtnGroupEle.html() + copyTransEle)
+    }
+    var clipboard = new ClipboardJS('#copy_trans');
+    clipboard.on('success', function(e) {
+        clickPerformance('#copy_trans','已复制');
+        e.clearSelection();
+    });
+    clipboard.on('error', function(e) {
+        clickPerformance('#copy_trans','出错');
+    });
+}
+
 // “除换行”功能的快捷键
 function activateReplaceKeyFunction(config) {
     if (!config.replaceKeyFunction.check) {
@@ -216,6 +304,7 @@ function addTranslateHelper()
 {
     if (hasHelper)
     {
+        // 防止重复添加
         return;
     }
     var href = window.location.href;
@@ -225,7 +314,9 @@ function addTranslateHelper()
         // 添加功能
         if (matchElement(href, config))
         {
+            insertHelperBtnGroup(config);
             activateReplaceFunction(config);
+            activateCopyTransFunction(config);
             activateReplaceKeyFunction(config);
             activateForceFunction(config);
             activateSpeechFunction(config);
@@ -235,6 +326,7 @@ function addTranslateHelper()
     hasHelper = true;
 }
 
+// 延时十秒自动添加。防止页面加载过久，下面函数失效？
 setTimeout(addTranslateHelper, 10000);
 
 $(document).ready(function () {

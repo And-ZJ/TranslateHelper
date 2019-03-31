@@ -71,6 +71,9 @@ function getConfigFromWeb() {
             'check': $('#replaceKeyFunction').prop('checked'),
             'keyValue': $('#keyValue').val()
         },
+        'copyTransFunction':{
+            'check': $('#copyTransFunction').prop('checked')
+        },
         'forceFunction': {
             'check': $('#forceFunction').prop('checked')
         },
@@ -110,6 +113,7 @@ function setConfigToWeb(config) {
 
     $('#replaceKeyFunction').prop("checked", config.replaceKeyFunction.check);
     $('#keyValue').val(config.replaceKeyFunction.keyValue);
+    $('#copyTransFunction').prop("checked", config.copyTransFunction.check);
     $('#forceFunction').prop("checked", config.forceFunction.check);
     $('#speechFunction').prop("checked", config.speechFunction.check);
     $('#clearFunction').prop("checked", config.clearFunction.check);

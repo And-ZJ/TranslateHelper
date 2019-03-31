@@ -1,12 +1,21 @@
 @charset "UTF-8";
-#replace_line {
+/*基本样式*/
+#helper_btn_group{
+    display: inline-block;
+    margin: 0 2px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+#replace_line, #copy_trans {
     display: inline-block;
     border: 1px solid mediumslateblue;
     border-radius: 4px;
     background-color: aliceblue;
     color: darkcyan;
     font-size: 14px;
-    margin: 0 10px;
+    margin: 0 2px;
     padding: 0 5px;
     cursor: pointer;
     -webkit-user-select: none;
@@ -15,19 +24,19 @@
     user-select: none;
 }
 
-#replace_line.baidu {
+#replace_line.baidu, #copy_trans.baidu{
     height: 30px;
     line-height: 30px;
     float: none;
 }
 
-#replace_line.google {
+#replace_line.google, #copy_trans.google {
     height: 27px;
     line-height: 27px;
     float: left;
 }
 
-#replace_line.googleNew1 {
+#helper_btn_group.googleNew1{
     height: 27px;
     line-height: 27px;
     float: right;
@@ -35,7 +44,13 @@
     margin-right: 40px;
 }
 
-#replace_line.youdao {
+#replace_line.googleNew1{
+}
+
+#copy_trans.googleNew1 {
+}
+
+#replace_line.youdao, #copy_trans.youdao {
     font-size: 16px;
     vertical-align: middle;
     height: 36px;
@@ -43,7 +58,7 @@
     float:none;
 }
 
-#replace_line:hover {
+#replace_line:hover, #copy_trans:hover {
     background-color: lavender;
 }
 

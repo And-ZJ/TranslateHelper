@@ -58,6 +58,12 @@
     float:none;
 }
 
+#replace_line.bing, #copy_trans.bing{
+    height: 30px;
+    line-height: 30px;
+    float: none;
+}
+
 #replace_line:hover, #copy_trans:hover {
     background-color: lavender;
 }

@@ -1,8 +1,8 @@
 {
   "name": "翻译助手",
-  "version": "0.6",
+  "version": "0.7",
   "manifest_version": 2,
-  "description": "在百度翻译、谷歌翻译、有道翻译网页页面。按下“除换行”键，可去除待翻译文本框中的换行。更多功能和设置，请点击“选项”查看(右击右上角的本插件图标)。",
+  "description": "在百度翻译、谷歌翻译、有道翻译、必应翻译网页页面。按下“除换行”键，可去除待翻译文本框中的换行。更多功能和设置，请点击“选项”查看(右击右上角的本插件图标)。",
   "icons": {
     "128": "img/icon.png"
   },
@@ -15,7 +15,8 @@
         "*://translate.google.cn/*",
         "*://translate.google.com/*",
         "*://translate.google.com.hk/*",
-        "*://fanyi.youdao.com/*"
+        "*://fanyi.youdao.com/*",
+        "*://cn.bing.com/translator/*"
       ],
       "js": [
         "js/jquery-3.3.1.min.js",

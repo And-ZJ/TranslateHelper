@@ -27,6 +27,11 @@ var defaultConfig = {
                 'check': true,
                 'mode': 'append',
                 'version': 'new1'
+            },
+            'bing': {
+                'check': true,
+                'mode': 'append',
+                'version': 'new1'
             }
         }
     },

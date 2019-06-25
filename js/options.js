@@ -25,6 +25,7 @@ function saveConfig(config) {
 // 加载配置
 function loadConfig() {
     chrome.storage.sync.get(defaultConfig, function (items) {
+        items = Object.assign({},defaultConfig,items);
         setConfigToWeb(items);
     });
 }
@@ -63,6 +64,11 @@ function getConfigFromWeb() {
                 'youdao': {
                     'check': $('.translatePageSetting.youdao .check').prop('checked'),
                     'mode': $('.translatePageSetting.youdao .mode').val(),
+                    'version': 'new1'
+                },
+                'bing': {
+                    'check': $('.translatePageSetting.bing .check').prop('checked'),
+                    'mode': $('.translatePageSetting.bing .mode').val(),
                     'version': 'new1'
                 }
             }
@@ -109,6 +115,10 @@ function setConfigToWeb(config) {
     $('.translatePageSetting.youdao .check').prop("checked", config.replaceFunction.pageSetting.youdao.check);
     $(".translatePageSetting.youdao .mode").find("option[value='" + config.replaceFunction.pageSetting.youdao.mode + "']").prop("selected", true);
     $('.translatePageSetting.youdao .version').find("option[value='" + config.replaceFunction.pageSetting.youdao.version + "']").prop("selected", true);
+
+    $('.translatePageSetting.bing .check').prop("checked", config.replaceFunction.pageSetting.bing.check);
+    $(".translatePageSetting.bing .mode").find("option[value='" + config.replaceFunction.pageSetting.bing.mode + "']").prop("selected", true);
+    $('.translatePageSetting.bing .version').find("option[value='" + config.replaceFunction.pageSetting.bing.version + "']").prop("selected", true);
 
 
     $('#replaceKeyFunction').prop("checked", config.replaceKeyFunction.check);

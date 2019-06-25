@@ -34,9 +34,11 @@ function listenSound(selector) {
         return;
     }
     var sound = $(selector).first();
-    if (sound.css("display") == "block") {
+    // if (sound.css("display") == "block") {
+    //     sound.focus();
+    // }
+    if (sound.css("display") != "none") {
         sound.focus();
-        // sound.trigger();
     }
 }
 
@@ -70,6 +72,10 @@ function isBaiduTranslatePage(href) {
 
 function isYouDaoTranslatePage(href) {
     return href.search("fanyi.youdao.com") > -1;
+}
+
+function isBingTranslatePage(href){
+    return href.search("cn.bing.com/translator") > -1;
 }
 
 // 标识当前是哪个翻译界面
@@ -159,6 +165,18 @@ function matchElement(href, config) {
         // 有道翻译页面未找到发音按钮
         console.log("翻译助手：有道翻译页面未找到发音按钮");
     }
+    else if (isBingTranslatePage(href)){
+        // 必应翻译
+        currentPage = 'bing';
+        // console.log("翻译助手：必应翻译页面");
+        insertEle = $(".t_select");
+        inputEdit = $("textarea#t_sv");
+        listenEleSelector = "#t_srcplayc #t_srcplaycIcon";
+        helperBtnGroupEle = '<div id="helper_btn_group" class="bing"></div>';
+        replaceLineEle = "<div id='replace_line' class='bing'>除换行</div>";
+        copyTransEle = "<div id='copy_trans' class='bing' data-clipboard-action='copy'" +
+            " data-clipboard-target='#t_tv'>复制</div>";
+    }
     if (!currentPage)
     {
         // console.log("翻译助手：页面元素匹配失败。")
@@ -200,9 +218,10 @@ function activateReplaceFunction(config) {
     $("#replace_line").click(function () {
         // 点击“除换行”按钮，可自动去除待翻译文本中的大量换行符和空格（连续空格会变一个）。
         var replaced_text = inputEdit.val();
+        replaced_text.trim()
         if (/.*[\u4e00-\u9fa5]+.*$/.test(replaced_text)){
             // 如果有中文，则将换行删除。
-            // 此处可能误判，以后改进
+            // TODO: 此处可能误判，以后改进
             replaced_text = replaced_text.replace(/\n/g,''); 
         }
         else{
@@ -211,9 +230,9 @@ function activateReplaceFunction(config) {
         }
         // 将连续空格替换成单空格
         replaced_text = replaced_text.replace(/  /g, ' ');
-        
+        // 在内容末尾添加换行，方便接着复制下一块内容。
+        replaced_text += '\n';
         inputEdit.val(replaced_text);
-        // replaceLineClickPerformance();
         clickPerformance(this,"已去除");
     });
     console.log("翻译助手：若未出现‘除换行’按钮，请右键点击本插件图标，在“选项”中尝试使用其他方式。");

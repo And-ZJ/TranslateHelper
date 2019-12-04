@@ -226,7 +226,22 @@ function activateReplaceFunction(config) {
         }
         else{
             // 如果不含中文，则将换行替换成空格
-            replaced_text = replaced_text.replace(/\n/g,' '); 
+            // 感谢 @liyangorg 的代码和建议
+            // 空行输出 && 单行末尾不是 . ，都需要用空格替换换行
+            var buffer = '';
+            replaced_text.trim().split('\n').forEach(function (line, i) {
+
+                if (line.length == 0) {
+                    line += '\n'
+                } else if (line.trim().endsWith('.')) {
+                    line += '\n'
+                } else {
+                    line += ' '
+                }
+                buffer += line;
+            });
+            replaced_text = buffer;
+            // replaced_text = replaced_text.replace(/\n/g,' ');
         }
         // 将连续空格替换成单空格
         replaced_text = replaced_text.replace(/  /g, ' ');

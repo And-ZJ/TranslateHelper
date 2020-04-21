@@ -1,171 +1,208 @@
 ﻿// 提示框
 var hintTimeout = null;
+
 function clearHint() {
     hintTimeout = null;
     $("#hint").text("");
 }
+
 function setHint(msg, time) {
     $("#hint").text(msg);
-    if (time == undefined || time == null) {
+    if (typeof time === "undefined" || time === null) {
         time = 5000;
     }
-    if (hintTimeout)
-    {
+    if (hintTimeout) {
         clearTimeout(hintTimeout)
     }
     if (time > 0) {
         hintTimeout = setTimeout(clearHint, time);
     }
 }
-// 保存配置
-function saveConfig(config) {
-    chrome.storage.sync.set(config, function () {
-    });
+
+// 快捷键的提示框
+var shortcutKeyHintTimeout = null;
+
+function clearShortcutKeyHint() {
+    shortcutKeyHintTimeout = null;
+    $("#format_shortcut_key_hint").text("");
 }
-// 加载配置
-function loadConfig() {
-    chrome.storage.sync.get(defaultConfig, function (items) {
-        items = Object.assign({},defaultConfig,items);
-        setConfigToWeb(items);
-    });
+
+function setShortcutKeyHint(msg, time) {
+    $("#format_shortcut_key_hint").text(msg);
+    if (typeof time === "undefined" || time === null) {
+        time = 5000;
+    }
+    if (shortcutKeyHintTimeout) {
+        clearTimeout(shortcutKeyHintTimeout)
+    }
+    if (time > 0) {
+        shortcutKeyHintTimeout = setTimeout(clearShortcutKeyHint, time);
+    }
 }
-// 恢复默认
-function restoreConfig() {
-    setConfigToWeb(defaultConfig);
-    chrome.storage.sync.set(defaultConfig, function () {
-    });
-}
+
 // 从页面读取配置
-function getConfigFromWeb() {
-    var config = {
-        'replaceFunction': {
-            'check': $('#replaceFunction').prop('checked'),
+function getHelperConfigFromOptionsPage() {
+    var helperConfig = {
+        'formatFunction': {
+            'check': $('#format_function').prop('checked'),
+            'formatConfig': {
+                'formatTabToSpace': $('#format_tab_to_space').prop('checked'),
+                'formatLineStartChar': $('#format_line_start_char').prop('checked'),
+                'lineStartCharList': $('#line_start_char_list').val(),
+                'formatLineEndChar': $('#format_line_end_char').prop('checked'),
+                'lineEndCharList': $('#line_end_char_list').val(),
+                'formatCRLFToSpace': $('#format_CRLF_to_space').prop('checked'),
+                'formatRemainEmptyCRLF': $('#format_remain_empty_CRLF').prop('checked'),
+                'formatSpaceTo1': $('#format_space_to_1').prop('checked'),
+                'formatChineseCustomSpace': $('#format_chinese_custom_space').prop('checked'),
+                'formatAddCRLFAtEnd': $('#format_add_CRLF_at_end').prop('checked'),
+
+            },
+
             'pageSetting': {
                 'google': {
-                    'check': $('.translatePageSetting.google .check').prop('checked'),
-                    'mode': $('.translatePageSetting.google .mode').val(),
-                    'version': $('.translatePageSetting.google .version').val()
+                    'check': $('.translate_page_setting.google .check').prop('checked'),
+                    'mode': $('.translate_page_setting.google .mode').val(),
+                    // 'version': $('.translate_page_setting.google .version').val()
                 },
                 'googleCN': {
-                    'check': $('.translatePageSetting.googleCN .check').prop('checked'),
-                    'mode': $('.translatePageSetting.googleCN .mode').val(),
-                    'version': $('.translatePageSetting.googleCN .version').val()
+                    'check': $('.translate_page_setting.googleCN .check').prop('checked'),
+                    'mode': $('.translate_page_setting.googleCN .mode').val(),
+                    // 'version': $('.translate_page_setting.googleCN .version').val()
                 },
                 'googleCNHK': {
-                    'check': $('.translatePageSetting.googleCNHK .check').prop('checked'),
-                    'mode': $('.translatePageSetting.googleCNHK .mode').val(),
-                    'version': $('.translatePageSetting.googleCNHK .version').val()
+                    'check': $('.translate_page_setting.googleCNHK .check').prop('checked'),
+                    'mode': $('.translate_page_setting.googleCNHK .mode').val(),
+                    // 'version': $('.translate_page_setting.googleCNHK .version').val()
                 },
                 'baidu': {
-                    'check': $('.translatePageSetting.baidu .check').prop('checked'),
-                    'mode': $('.translatePageSetting.baidu .mode').val(),
+                    'check': $('.translate_page_setting.baidu .check').prop('checked'),
+                    'mode': $('.translate_page_setting.baidu .mode').val(),
                     'version': 'new1'
                 },
                 'youdao': {
-                    'check': $('.translatePageSetting.youdao .check').prop('checked'),
-                    'mode': $('.translatePageSetting.youdao .mode').val(),
+                    'check': $('.translate_page_setting.youdao .check').prop('checked'),
+                    'mode': $('.translate_page_setting.youdao .mode').val(),
                     'version': 'new1'
                 },
                 'bing': {
-                    'check': $('.translatePageSetting.bing .check').prop('checked'),
-                    'mode': $('.translatePageSetting.bing .mode').val(),
+                    'check': $('.translate_page_setting.bing .check').prop('checked'),
+                    'mode': $('.translate_page_setting.bing .mode').val(),
                     'version': 'new1'
                 }
             }
         },
-        'replaceKeyFunction': {
-            'check': $('#replaceKeyFunction').prop('checked'),
-            'keyValue': $('#keyValue').val()
+        'formatShortcutKeyFunction': {
+            'check': $('#format_shortcut_key_function').prop('checked'),
+            'keyValue': $('#format_shortcut_key_value').val()
         },
-        'copyTransFunction':{
-            'check': $('#copyTransFunction').prop('checked')
+        'copyTransFunction': {
+            'check': $('#copy_trans_function').prop('checked')
         },
         'forceFunction': {
-            'check': $('#forceFunction').prop('checked')
+            'check': $('#force_function').prop('checked')
         },
         'speechFunction': {
-            'check': $('#speechFunction').prop('checked')
+            'check': $('#speech_function').prop('checked')
         },
         'clearFunction': {
-            'check': $('#clearFunction').prop('checked')
+            'check': $('#clear_function').prop('checked')
         }
     };
-    return config;
+    return helperConfig;
 }
+
 // 将配置应用到页面
-function setConfigToWeb(config) {
-    $('#replaceFunction').prop("checked", config.replaceFunction.check);
+function setHelperConfigToOptionsPage(helperConfig) {
+    $('#format_function').prop("checked", helperConfig.formatFunction.check);
 
-    $('.translatePageSetting.google .check').prop("checked", config.replaceFunction.pageSetting.google.check);
-    $(".translatePageSetting.google .mode").find("option[value='" + config.replaceFunction.pageSetting.google.mode + "']").prop("selected", true);
-    $('.translatePageSetting.google .version').find("option[value='" + config.replaceFunction.pageSetting.google.version + "']").prop("selected", true);
-
-    $('.translatePageSetting.googleCN .check').prop("checked", config.replaceFunction.pageSetting.googleCN.check);
-    $(".translatePageSetting.googleCN .mode").find("option[value='" + config.replaceFunction.pageSetting.googleCN.mode + "']").prop("selected", true);
-    $('.translatePageSetting.googleCN .version').find("option[value='" + config.replaceFunction.pageSetting.googleCN.version + "']").prop("selected", true);
-
-    $('.translatePageSetting.googleCNHK .check').prop("checked", config.replaceFunction.pageSetting.googleCNHK.check);
-    $(".translatePageSetting.googleCNHK .mode").find("option[value='" + config.replaceFunction.pageSetting.googleCNHK.mode + "']").prop("selected", true);
-    $('.translatePageSetting.googleCNHK .version').find("option[value='" + config.replaceFunction.pageSetting.googleCNHK.version + "']").prop("selected", true);
-
-    $('.translatePageSetting.baidu .check').prop("checked", config.replaceFunction.pageSetting.baidu.check);
-    $(".translatePageSetting.baidu .mode").find("option[value='" + config.replaceFunction.pageSetting.baidu.mode + "']").prop("selected", true);
-    $('.translatePageSetting.baidu .version').find("option[value='" + config.replaceFunction.pageSetting.baidu.version + "']").prop("selected", true);
-
-    $('.translatePageSetting.youdao .check').prop("checked", config.replaceFunction.pageSetting.youdao.check);
-    $(".translatePageSetting.youdao .mode").find("option[value='" + config.replaceFunction.pageSetting.youdao.mode + "']").prop("selected", true);
-    $('.translatePageSetting.youdao .version').find("option[value='" + config.replaceFunction.pageSetting.youdao.version + "']").prop("selected", true);
-
-    $('.translatePageSetting.bing .check').prop("checked", config.replaceFunction.pageSetting.bing.check);
-    $(".translatePageSetting.bing .mode").find("option[value='" + config.replaceFunction.pageSetting.bing.mode + "']").prop("selected", true);
-    $('.translatePageSetting.bing .version').find("option[value='" + config.replaceFunction.pageSetting.bing.version + "']").prop("selected", true);
+    $('#format_tab_to_space').prop('checked', helperConfig.formatFunction.formatConfig.formatTabToSpace);
+    $('#format_line_start_char').prop('checked', helperConfig.formatFunction.formatConfig.formatLineStartChar);
+    $('#line_start_char_list').val(helperConfig.formatFunction.formatConfig.lineStartCharList);
+    $('#format_line_end_char').prop('checked', helperConfig.formatFunction.formatConfig.formatLineEndChar);
+    $('#line_end_char_list').val(helperConfig.formatFunction.formatConfig.lineEndCharList);
+    $('#format_CRLF_to_space').prop('checked', helperConfig.formatFunction.formatConfig.formatCRLFToSpace);
+    $('#format_remain_empty_CRLF').prop('checked', helperConfig.formatFunction.formatConfig.formatRemainEmptyCRLF);
+    $('#format_space_to_1').prop('checked', helperConfig.formatFunction.formatConfig.formatSpaceTo1);
+    $('#format_chinese_custom_space').prop('checked', helperConfig.formatFunction.formatConfig.formatChineseCustomSpace);
+    $('#format_add_CRLF_at_end').prop('checked', helperConfig.formatFunction.formatConfig.formatAddCRLFAtEnd);
 
 
-    $('#replaceKeyFunction').prop("checked", config.replaceKeyFunction.check);
-    $('#keyValue').val(config.replaceKeyFunction.keyValue);
-    $('#copyTransFunction').prop("checked", config.copyTransFunction.check);
-    $('#forceFunction').prop("checked", config.forceFunction.check);
-    $('#speechFunction').prop("checked", config.speechFunction.check);
-    $('#clearFunction').prop("checked", config.clearFunction.check);
+    $('.translate_page_setting.google .check').prop("checked", helperConfig.formatFunction.pageSetting.google.check);
+    $(".translate_page_setting.google .mode").find("option[value='" + helperConfig.formatFunction.pageSetting.google.mode + "']").prop("selected", true);
+    // $('.translate_page_setting.google .version').find("option[value='" + helperConfig.formatFunction.pageSetting.google.version + "']").prop("selected", true);
+
+    $('.translate_page_setting.googleCN .check').prop("checked", helperConfig.formatFunction.pageSetting.googleCN.check);
+    $(".translate_page_setting.googleCN .mode").find("option[value='" + helperConfig.formatFunction.pageSetting.googleCN.mode + "']").prop("selected", true);
+    // $('.translate_page_setting.googleCN .version').find("option[value='" + helperConfig.formatFunction.pageSetting.googleCN.version + "']").prop("selected", true);
+
+    $('.translate_page_setting.googleCNHK .check').prop("checked", helperConfig.formatFunction.pageSetting.googleCNHK.check);
+    $(".translate_page_setting.googleCNHK .mode").find("option[value='" + helperConfig.formatFunction.pageSetting.googleCNHK.mode + "']").prop("selected", true);
+    // $('.translate_page_setting.googleCNHK .version').find("option[value='" + helperConfig.formatFunction.pageSetting.googleCNHK.version + "']").prop("selected", true);
+
+    $('.translate_page_setting.baidu .check').prop("checked", helperConfig.formatFunction.pageSetting.baidu.check);
+    $(".translate_page_setting.baidu .mode").find("option[value='" + helperConfig.formatFunction.pageSetting.baidu.mode + "']").prop("selected", true);
+    // $('.translate_page_setting.baidu .version').find("option[value='" + helperConfig.formatFunction.pageSetting.baidu.version + "']").prop("selected", true);
+
+    $('.translate_page_setting.youdao .check').prop("checked", helperConfig.formatFunction.pageSetting.youdao.check);
+    $(".translate_page_setting.youdao .mode").find("option[value='" + helperConfig.formatFunction.pageSetting.youdao.mode + "']").prop("selected", true);
+    // $('.translate_page_setting.youdao .version').find("option[value='" + helperConfig.formatFunction.pageSetting.youdao.version + "']").prop("selected", true);
+
+    $('.translate_page_setting.bing .check').prop("checked", helperConfig.formatFunction.pageSetting.bing.check);
+    $(".translate_page_setting.bing .mode").find("option[value='" + helperConfig.formatFunction.pageSetting.bing.mode + "']").prop("selected", true);
+    // $('.translate_page_setting.bing .version').find("option[value='" + helperConfig.formatFunction.pageSetting.bing.version + "']").prop("selected", true);
+
+
+    $('#format_shortcut_key_function').prop("checked", helperConfig.formatShortcutKeyFunction.check);
+    $('#key_value').val(helperConfig.formatShortcutKeyFunction.keyValue);
+    $('#copy_trans_function').prop("checked", helperConfig.copyTransFunction.check);
+    $('#force_function').prop("checked", helperConfig.forceFunction.check);
+    $('#speech_function').prop("checked", helperConfig.speechFunction.check);
+    $('#clear_function').prop("checked", helperConfig.clearFunction.check);
 }
 
 
 $(document).ready(function () {
     // 载入配置
-    loadConfig();
+    loadHelperConfigFromChrome(function (helperConfig) {
+        setHelperConfigToOptionsPage(helperConfig)
+    });
+
     // 保存配置按钮
-    $('#saveConfig').click(function () {
-        var config = getConfigFromWeb();
-        saveConfig(config);
+    $('#save_helper_config_btn').click(function () {
+        var helperConfig = getHelperConfigFromOptionsPage();
+        debugLog(helperConfig);
+        saveHelperConfigToChrome(helperConfig);
         setHint("配置已保存，已打开页面需刷新");
     });
+
     // 恢复默认配置按钮
     var restoreClickTimes = 0;
-    $('#restoreConfig').click(function () {
+    $('#restore_helper_config_btn').click(function () {
         restoreClickTimes += 1;
         if (restoreClickTimes <= 1) {
             setHint("再点击一次，将恢复成默认配置");
         }
         else {
-            restoreConfig();
+            saveHelperConfigToChrome(defaultHelperConfig_Newest);
+            setHelperConfigToOptionsPage(defaultHelperConfig_Newest);
             restoreClickTimes = 0;
             setHint("已恢复成默认配置");
         }
     });
 
-
     // 快捷键测试
     var keyValue = null;
 
     function handleKey(event) {
-        setHint("检测到快捷键:"+event.data.keys);
+        setShortcutKeyHint("检测到快捷键:" + event.data.keys);
         $(document).unbind('keydown');
         return false;
     }
 
-    $('#keyTest').click(function () {
-        setHint("请按快捷键");
-        keyValue = $('#keyValue').val();
-        $(document).bind('keydown', keyValue,handleKey);
+    $('#format_shortcut_key_test_btn').click(function () {
+        setShortcutKeyHint("请按快捷键");
+        keyValue = $('#format_shortcut_key_value').val();
+        $(document).bind('keydown', keyValue, handleKey);
     })
 });

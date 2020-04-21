@@ -1,14 +1,17 @@
 @charset "UTF-8";
 /*基本样式*/
-#helper_btn_group{
+#helper_btn_group {
     display: inline-block;
+    /*position: absolute;*/
+    z-index: 10000;
     margin: 0 2px;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
 }
-#replace_line, #copy_trans {
+
+.btn-base {
     display: inline-block;
     border: 1px solid mediumslateblue;
     border-radius: 4px;
@@ -18,55 +21,108 @@
     margin: 0 2px;
     padding: 0 5px;
     cursor: pointer;
+    text-align: center;
+    line-height: 25px;
+    min-height: 25px;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
 }
 
-#replace_line.baidu, #copy_trans.baidu{
+.btn-base:hover {
+    color: black;
+    background-color: lavender;
+}
+
+.btn-base:active {
+    color: lavender;
+    background-color: blue;
+}
+
+.shape-circle {
+    display: inline-block;
+    cursor: help;
+    color: red;
+    width: 16px;
+    height: 16px;
+    line-height: 14px;
+    text-align: center;
+    vertical-align: middle;
+    font-size: 16px;
+    border: red solid 1px;
+    border-radius: 50%;
+    -moz-border-radius: 50%;
+    -webkit-border-radius: 50%;
+}
+
+.forbid-user-select {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.split-line {
+    margin: 1px 1px;
+    border: black solid 1px;
+    /*height: 1px;*/
+}
+
+#format_function_btn {
+    min-width: 50px;
+
+}
+
+#copy_trans_function_btn {
+    min-width: 30px;
+}
+
+#format_function_btn.baidu, #copy_trans_function_btn.baidu {
     height: 30px;
     line-height: 30px;
     float: none;
 }
 
-#replace_line.google, #copy_trans.google {
+#format_function_btn.google, #copy_trans_function_btn.google {
     height: 27px;
     line-height: 27px;
     float: left;
 }
 
-#helper_btn_group.googleNew1{
+#helper_btn_group.googleNew1 {
+    position: absolute;
     height: 27px;
     line-height: 27px;
     float: right;
     margin-top: 10px;
     margin-right: 40px;
+
 }
 
-#replace_line.googleNew1{
+#format_function_btn.googleNew1 {
 }
 
-#copy_trans.googleNew1 {
+#copy_trans_function_btn.googleNew1 {
 }
 
-#replace_line.youdao, #copy_trans.youdao {
+#format_function_btn.youdao, #copy_trans_function_btn.youdao {
     font-size: 16px;
     vertical-align: middle;
     height: 36px;
     line-height: 36px;
-    float:none;
+    float: none;
 }
 
-#replace_line.bing, #copy_trans.bing{
+#format_function_btn.bing, #copy_trans_function_btn.bing {
     height: 30px;
     line-height: 30px;
     float: none;
 }
 
-#replace_line:hover, #copy_trans:hover {
-    background-color: lavender;
-}
+/*#format_function_btn:hover, #copy_trans_function_btn:hover {*/
+/*background-color: lavender;*/
+/*}*/
 
 div.performance {
     color: red;

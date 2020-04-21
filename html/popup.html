@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/app.css">
+    <style>
+        body {
+            width: 400px;
+            height: 400px;
+            padding: 2px;
+        }
+
+        #input_text_area {
+            width: 100%;
+            margin: 2px 0;
+            display: block;
+            height: 200px;
+        }
+    </style>
+</head>
+<body>
+<div id="title" class="text-center text-info">翻译助手</div>
+<div><textarea id="input_text_area"></textarea></div>
+<div class="text-center forbid-user-select">
+    <div id='format_function_btn' class='btn-base'>格式化↑</div>
+    <div id='copy_trans_function_btn' class='btn-base'
+         data-clipboard-action='copy' data-clipboard-target='#input_text_area'>复制↑
+    </div>
+    <div id='clear_function_btn' class='btn-base'>清空↑</div>
+    <div class="shape-circle" data-toggle="tooltip" data-placement="bottom"
+         title="此处格式化功能直接使用下面的最新设置">?
+    </div>
+</div>
+<div class="split-line"></div>
+<div id="format_config_setting" class="forbid-user-select">
+    <div class="text-center text-danger"><span>格式化功能设置</span>
+        <div class="shape-circle" data-toggle="tooltip" data-placement="bottom"
+             title="由于不同功能可能有冲突或歧义，因此本插件按顺序依次执行下面已勾选的功能。">?
+        </div>
+        <div class="shape-circle" data-toggle="tooltip" data-placement="bottom"
+             title="更多设置请鼠标右键点击图标，并选择“选项”">?
+        </div>
+    </div>
+
+    <div>
+        <label><input id="format_tab_to_space" type="checkbox"/> Tab变成4空格</label>
+        <div class="shape-circle" data-toggle="tooltip" data-placement="bottom"
+             title="勾选后，Tab将替换成4个空格，不勾选则保留Tab字符。">?
+        </div>
+    </div>
+
+    <div>
+        <label><input id="format_line_start_char" type="checkbox"/> 从行首删除字符：
+            <input id="line_start_char_list" type="text" maxlength="20" style="width: 100px;"/></label>
+        <div class="shape-circle" data-toggle="tooltip" data-placement="bottom"
+             title="勾选后，将循环删除位于行首的这些字符之一。会自动跳过最前面的空格或Tab后匹配。例如，删除多行注释的行首注释符号。">?
+        </div>
+    </div>
+    <div>
+        <label><input id="format_line_end_char" type="checkbox"/> 从行尾删除字符：
+            <input id="line_end_char_list" type="text" maxlength="20" style="width: 100px;"/></label>
+        <div class="shape-circle" data-toggle="tooltip" data-placement="bottom"
+             title="勾选后，将循环删除位于行尾的这些字符之一。会自动跳过最后面的空格或Tab后匹配。">?
+        </div>
+    </div>
+    <div>
+        <label><input id="format_CRLF_to_space" type="checkbox"/> 换行符替换为单空格</label>
+        <div class="shape-circle" data-toggle="tooltip" data-placement="bottom"
+             title="此项即为原来的“除换行”功能。对‘\r’,‘\r\n’,'\n'换行符都生效。但注意，‘\r’,‘\r\n’始终会被处理成'\n'">?
+        </div>
+        <label><input id="format_remain_empty_CRLF" type="checkbox"/> 保留空白行</label>
+        <div class="shape-circle" data-toggle="tooltip" data-placement="bottom"
+             title="勾选后，可以手动将句子或段落用空行隔开，这样使用“除换行”功能就不会变成只有一个段落了。">?
+        </div>
+    </div>
+    <div>
+        <label><input id="format_space_to_1" type="checkbox"/> 连续多空格变成单空格</label>
+        <div class="shape-circle" data-toggle="tooltip" data-placement="bottom"
+             title="勾选后，由上述情形生成的连续空格，都会受影响。">?
+        </div>
+    </div>
+    <div>
+        <label><input id="format_chinese_custom_space" type="checkbox"/> 按中文习惯处理单空格</label>
+        <div class="shape-circle" data-toggle="tooltip" data-placement="bottom"
+             title="勾选后，会删除在两个中文字之间的单空格。">?
+        </div>
+    </div>
+    <div>
+        <label><input id="format_add_CRLF_at_end" type="checkbox"/> 在文本框最后添加单个空格和换行符</label>
+        <div class="shape-circle" data-toggle="tooltip" data-placement="bottom" title="省去粘贴下一段文字时，可能需要手动输入空格或换行的不便">?
+        </div>
+    </div>
+</div>
+
+
+<div class="forbid-user-select">
+    <div>
+        <div id="save_format_config_btn" class="btn-base">保存设置</div>
+        <span id="save_result_hint" class="text-danger"></span>
+    </div>
+    <div>
+        <span class="text-info">保存后，已打开网页需刷新才能应用新设置。</span>
+    </div>
+</div>
+<div class="forbid-user-select">
+    <div id="test_format_btn" class="btn-base" style="display: none;">测试</div>
+</div>
+
+<script type="text/javascript" charset="UTF-8" src="../js/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" charset="UTF-8" src="../js/jquery.hotkeys.js"></script>
+<script type="text/javascript" charset="UTF-8" src="../js/clipboard.min.js"></script>
+<script type="text/javascript" charset="UTF-8" src="../js/debug.js"></script>
+<script type="text/javascript" charset="UTF-8" src="../js/config.js"></script>
+<script type="text/javascript" charset="UTF-8" src="../js/function-format.js"></script>
+<script type="text/javascript" charset="UTF-8" src="../js/functions.js"></script>
+<script type="text/javascript" charset="UTF-8" src="../js/popup.js"></script>
+
+</body>
+</html>

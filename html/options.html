@@ -16,9 +16,10 @@
 </head>
 <body>
 <ul class="list-group forbid-user-select">
-    <li class="list-group-item">
-        <div>作者邮箱：<a href="mailto:ZJ.Cosmos@gmail.com">ZJ.Cosmos@gmail.com</a>
-            若想详细了解本插件请访问：<a href="https://github.com/And-ZJ/TranslateHelper">GitHub</a></div>
+    <li class="list-group-item allow-user-select">
+        <div><span>作者邮箱：</span><a href="mailto:ZJ.Cosmos@gmail.com" class="">ZJ.Cosmos@gmail.com</a><span>。更多内容请访问：</span><a href="https://github.com/And-ZJ/TranslateHelper">Github</a>，
+            <a href="https://chrome.google.com/webstore/detail/%E7%BF%BB%E8%AF%91%E5%8A%A9%E6%89%8B/ldhdmpimmbbjemmbklofidofnkgpakaa">谷歌网上应用店</a><span>。</span>
+            </div>
     </li>
     <li class="list-group-item">
         <div><label><input id="format_function" type="checkbox"/> 格式化功能</label>
@@ -32,6 +33,9 @@
                 <div class="text-center text-danger"><span>格式化功能设置</span>
                     <div class="shape-circle" data-toggle="tooltip" data-placement="bottom"
                          title="由于不同功能可能有冲突或歧义，因此本插件按顺序依次执行下面已勾选的功能。">?
+                    </div>
+                    <div class="shape-circle" data-toggle="tooltip" data-placement="bottom"
+                         title="可通过鼠标左键点击本插件图标，对格式化功能进行快速设置，而无需打开“选项”。">?
                     </div>
                 </div>
 
@@ -170,9 +174,9 @@
     </li>
     <li class="list-group-item">
         <div><label><input id="format_shortcut_key_function" type="checkbox"/>
-            除换行功能的快捷键</label>
+            “格式化”功能的快捷键</label>
             <div class="shape-circle" data-toggle="tooltip" data-placement="bottom"
-                 title="除换行功能禁用，并不会导致此快捷键被禁用，反之同理。">?
+                 title="“格式化”功能禁用，并不会导致此快捷键被禁用，反之同理。">?
             </div>
         </div>
         <label>输入快捷键：<input id="format_shortcut_key_value" type="text" value="ctrl+/"/>例如：ctrl+shift+z。若设置enter键，请输入return。勿输入中文字符。
@@ -201,7 +205,7 @@
 </div>
 
 <div>
-    <span class="text-danger">若版本更新后，若某些功能无法正常使用，请先点击“恢复默认”按钮试试，或者删除旧版本，再安装新版本。如有问题，烦请告知，谢谢。</span>
+    <span class="text-danger forbid-user-select">若版本更新后，若某些功能无法正常使用，请先点击“恢复默认”按钮试试，或者删除旧版本，再安装新版本。如有问题，烦请告知，谢谢。</span>
 </div>
 <div style="width: 100%;height: 50px;">
     <span id="hint" class="text-danger"></span>

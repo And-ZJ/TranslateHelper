@@ -56,6 +56,13 @@
     -webkit-border-radius: 50%;
 }
 
+.allow-user-select {
+    -webkit-user-select: text;
+    -moz-user-select: text;
+    -ms-user-select: text;
+    user-select: text;
+}
+
 .forbid-user-select {
     -webkit-user-select: none;
     -moz-user-select: none;

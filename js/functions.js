@@ -1,3 +1,4 @@
+// 在翻译网页上，实现各功能
 
 //延时响应
 function DelayResponse(delayFun, parameter, timeDelay) {
@@ -10,16 +11,16 @@ function DelayResponse(delayFun, parameter, timeDelay) {
      */
     var oneTimeout = null;
     var timeoutFun = function () {
-        if (oneTimeout != null) {
+        if (oneTimeout !== null) {
             oneTimeout = null;
         }
-        if (delayFun != null) {
+        if (delayFun !== null) {
             delayFun(parameter);
         }
     };
 
     this.run = function () {
-        if (oneTimeout == null) {
+        if (oneTimeout === null) {
             oneTimeout = setTimeout(timeoutFun, timeDelay);
         }
     }
@@ -32,9 +33,6 @@ function listenSound(selector) {
         return;
     }
     var sound = $(selector).first();
-    // if (sound.css("display") == "block") {
-    //     sound.focus();
-    // }
     if (sound.css("display") !== "none") {
         debugLog("listenSound focus");
         sound.focus();
@@ -70,20 +68,20 @@ function isPopupPage(href) {
         && href.search("popup.html") > -1;
 }
 
-
+// 用于容纳与翻译页面相关的元素
 function PageContainer() {
     this.currentPage = null;
 }
 
 PageContainer.prototype.isTranslateWebPage = function () {
-    if (this.currentPage == null || this.currentPage == "popup") {
+    if (this.currentPage === null || this.currentPage === "popup") {
         return false;
     }
     return true;
 };
 
 PageContainer.prototype.isPopupPage = function () {
-    if (this.currentPage != null && this.currentPage == "popup") {
+    if (this.currentPage !== null && this.currentPage === "popup") {
         return true;
     }
     return false;
@@ -100,7 +98,7 @@ function clickPerformanceAtEle(ele, text) {
     })
 }
 
-// 识别当前是哪个翻译界面，用于匹配相应的输入框
+// 识别当前是哪个翻译界面，用于匹配相应的输入框、和按钮等
 function matchTranslatePage(href) {
     var pageContainer = new PageContainer();
     if (isGoogleTranslatePage(href)) {
@@ -204,7 +202,6 @@ function matchTranslatePage(href) {
         pageContainer.clearBtnEle = $("#clear_function_btn");
     }
     if (pageContainer.currentPage === null) {
-        // console.log("翻译助手：页面元素匹配失败。")
         return null;
     }
     return pageContainer;
@@ -216,10 +213,10 @@ function insertHelperBtnGroup(pageContainer, helperConfig) {
     if (pageContainer.isTranslateWebPage()) {
         debugLog("insertHelperBtnGroup");
         var mode = helperConfig.formatFunction.pageSetting[pageContainer.currentPage].mode;
-        if (mode == "append") {
+        if (mode === "append") {
             pageContainer.insertEle.append(pageContainer.helperBtnGroupEleText);
         }
-        else if (mode == "html") {
+        else if (mode === "html") {
             pageContainer.insertEle.html(insertEle.html() + pageContainer.helperBtnGroupEleText)
         }
         pageContainer.helperBtnGroupEle = $('#helper_btn_group');
@@ -239,10 +236,10 @@ function activateFormatFunction(pageContainer, helperConfig) {
         }
         debugLog("activateFormatFunction");
         var mode = helperConfig.formatFunction.pageSetting[pageContainer.currentPage].mode;
-        if (mode == "append") {
+        if (mode === "append") {
             pageContainer.helperBtnGroupEle.append(pageContainer.formatBtnEleText);
         }
-        else if (mode == "html") {
+        else if (mode === "html") {
             pageContainer.helperBtnGroupEle.html(pageContainer.helperBtnGroupEle.html() + pageContainer.formatBtnEleText)
         }
         pageContainer.formatBtnEle = $("#format_function_btn");
@@ -271,10 +268,10 @@ function activateCopyTransFunction(pageContainer, helperConfig) {
         }
 
         var mode = helperConfig.formatFunction.pageSetting[pageContainer.currentPage].mode;
-        if (mode == "append") {
+        if (mode === "append") {
             pageContainer.helperBtnGroupEle.append(pageContainer.copyTransBtnEleText);
         }
-        else if (mode == "html") {
+        else if (mode === "html") {
             pageContainer.helperBtnGroupEle.html(pageContainer.helperBtnGroupEle.html() + pageContainer.copyTransBtnEleText)
         }
         pageContainer.copyTransBtnEle = new ClipboardJS('#copy_trans_function_btn');
@@ -355,9 +352,10 @@ function activateClearFunction(pageContainer, helperConfig) {
 
 }
 
+// 向翻译页面启动翻译助手
 function activateTranslateHelper(pageContainer) {
     debugLog(pageContainer);
-    if (pageContainer != undefined || pageContainer != null) {
+    if (typeof pageContainer !== "undefined" || pageContainer !== null) {
         // 加载配置
         loadHelperConfigFromChrome(function (helperConfig) {
             debugLog(helperConfig);

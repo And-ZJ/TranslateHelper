@@ -1,3 +1,5 @@
+// 本文件是对字符串实现格式化的具体实现函数
+
 // 从行首删除字符
 function handleTextFormat_lineStartChar(text, lineStartCharList) {
     var buffer = '';
@@ -144,7 +146,13 @@ function handleTextFormat_addCRLFAtEnd(text) {
     return text;
 }
 
-// “格式化”功能，对文本的处理函数。
+/**
+ * “格式化”功能，对文本的处理函数。
+ * @param {*} text 待处理的字符串
+ * @param {*} formatConfig 格式化功能的配置
+ *         具体可参考config.js中：defaultHelperConfig_2020_04_20.formatFunction.formatConfig
+ * @return {*} text “格式化”处理后的字符串
+ */
 function handleTextFormat(text, formatConfig) {
     debugLog(formatConfig);
     debugLog('original', text);
@@ -182,7 +190,7 @@ function handleTextFormat(text, formatConfig) {
     return text;
 }
 
-// 下面是测试“格式化”功能的函数
+// 下面是测试“格式化”功能的函数，没什么用
 function testFormatFunction() {
     testFormatLineStartChar();
     testFormatLineEndChar();

@@ -1,5 +1,14 @@
+// 本文件是测试时用的
+
+// 启用 debugLog 函数的开关
 var DEBUG_LOG = false;
+
+// 测试旧版配置的开关（会在“选项”界面生成新的按钮）
+// 并没有实现向浏览器写入旧版配置的功能，导致测试不完全
 var DEBUG_OLD_HELPER_CONFIG = false;
+
+// 测试格式化功能的开关（会在“格式化”配置中生成新的按钮）
+// 依赖于function-format.js中“testFormatFunction”函数的完整度，但目前没写好。
 var DEBUG_FORMAT = false;
 
 function debugLog() {

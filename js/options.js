@@ -56,7 +56,7 @@ function getHelperConfigFromOptionsPage() {
                 'formatSpaceTo1': $('#format_space_to_1').prop('checked'),
                 'formatChineseCustomSpace': $('#format_chinese_custom_space').prop('checked'),
                 'formatAddCRLFAtEnd': $('#format_add_CRLF_at_end').prop('checked'),
-
+                'formatRemainTwoCRLFAtEnd': $("#format_remain_two_CRLF_at_end").prop('checked')
             },
 
             'pageSetting': {
@@ -88,6 +88,11 @@ function getHelperConfigFromOptionsPage() {
                 'bing': {
                     'check': $('.translate_page_setting.bing .check').prop('checked'),
                     'mode': $('.translate_page_setting.bing .mode').val(),
+                    'version': 'new1'
+                },
+                'sogou': {
+                    'check': $('.translate_page_setting.sogou .check').prop('checked'),
+                    'mode': $('.translate_page_setting.sogou .mode').val(),
                     'version': 'new1'
                 }
             }
@@ -126,7 +131,7 @@ function setHelperConfigToOptionsPage(helperConfig) {
     $('#format_space_to_1').prop('checked', helperConfig.formatFunction.formatConfig.formatSpaceTo1);
     $('#format_chinese_custom_space').prop('checked', helperConfig.formatFunction.formatConfig.formatChineseCustomSpace);
     $('#format_add_CRLF_at_end').prop('checked', helperConfig.formatFunction.formatConfig.formatAddCRLFAtEnd);
-
+    $('#format_remain_two_CRLF_at_end').prop('checked', helperConfig.formatFunction.formatConfig.formatRemainTwoCRLFAtEnd);
 
     $('.translate_page_setting.google .check').prop("checked", helperConfig.formatFunction.pageSetting.google.check);
     $(".translate_page_setting.google .mode").find("option[value='" + helperConfig.formatFunction.pageSetting.google.mode + "']").prop("selected", true);
@@ -152,6 +157,9 @@ function setHelperConfigToOptionsPage(helperConfig) {
     $(".translate_page_setting.bing .mode").find("option[value='" + helperConfig.formatFunction.pageSetting.bing.mode + "']").prop("selected", true);
     // $('.translate_page_setting.bing .version').find("option[value='" + helperConfig.formatFunction.pageSetting.bing.version + "']").prop("selected", true);
 
+    $('.translate_page_setting.sogou .check').prop("checked", helperConfig.formatFunction.pageSetting.sogou.check);
+    $(".translate_page_setting.sogou .mode").find("option[value='" + helperConfig.formatFunction.pageSetting.sogou.mode + "']").prop("selected", true);
+    // $('.translate_page_setting.sogou .version').find("option[value='" + helperConfig.formatFunction.pageSetting.sogou.version + "']").prop("selected", true);
 
     $('#format_shortcut_key_function').prop("checked", helperConfig.formatShortcutKeyFunction.check);
     $('#key_value').val(helperConfig.formatShortcutKeyFunction.keyValue);

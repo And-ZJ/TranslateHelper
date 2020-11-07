@@ -63,6 +63,10 @@ function isBingTranslatePage(href) {
     return href.search("cn.bing.com/translator") > -1;
 }
 
+function isSogouTranslatePage(href) {
+    return href.search("translate.sogou.com") > -1 || href.search("fanyi.sogou.com") > -1;
+}
+
 function isPopupPage(href) {
     return href.search("chrome-extension") > -1
         && href.search("popup.html") > -1;
@@ -112,7 +116,17 @@ function matchTranslatePage(href) {
         else if (isGoogleTranslatePage(href)) {
             pageContainer.currentPage = 'google';
         }
-        if ($("div.sl-wrap") != null) {
+        if ($("div.akczyd") !== null && $("div.akczyd").length !== 0) {
+            // 谷歌翻译的新版页面，从2020-11-07开始
+            pageContainer.insertEle = $("div.akczyd");
+            pageContainer.inputEdit = $("textarea.er8xn");
+            pageContainer.listenEleSelector = "button.VfPpkd-Bz112c-LgbsSe[aria-label='听取原文']";
+            pageContainer.helperBtnGroupEleText = '<div id="helper_btn_group" class="googleNew2"></div>';
+            pageContainer.formatBtnEleText = "<div id='format_function_btn' class='btn-base googleNew2'>格式化</div>";
+            pageContainer.copyTransBtnEleText = "<div id='copy_trans_function_btn' class='btn-base googleNew2' data-clipboard-action='copy'" +
+                " data-clipboard-target='span.VIiyi'>复制</div>";
+
+        } else if ($("div.sl-wrap") !== null && $("div.sl-wrap").length !== 0) {
             // 谷歌翻译的新版页面，从2018-11-29开始
             pageContainer.insertEle = $("div.sl-wrap");
             pageContainer.inputEdit = $("textarea#source");
@@ -121,8 +135,7 @@ function matchTranslatePage(href) {
             pageContainer.formatBtnEleText = "<div id='format_function_btn' class='btn-base googleNew1'>格式化</div>";
             pageContainer.copyTransBtnEleText = "<div id='copy_trans_function_btn' class='btn-base googleNew1' data-clipboard-action='copy'" +
                 " data-clipboard-target='.result-shield-container.tlid-copy-target'>复制</div>";
-        }
-        else if ($("#gt-lang-right") != null) {
+        } else if ($("#gt-lang-right") != null) {
             // 谷歌网页翻译的旧版页面
             pageContainer.insertEle = $("#gt-lang-right");
             pageContainer.inputEdit = $("textarea#source");
@@ -131,8 +144,7 @@ function matchTranslatePage(href) {
             pageContainer.formatBtnEleText = "<div id='format_function_btn' class='btn-base google'>格式化</div>";
             pageContainer.copyTransBtnEleText = "<div id='copy_trans_function_btn' class='btn-base google' data-clipboard-action='copy'" +
                 " data-clipboard-target='.result-shield-container.tlid-copy-target'>复制</div>";
-        }
-        else {
+        } else {
             pageContainer.currentPage = null;
         }
 
@@ -189,7 +201,16 @@ function matchTranslatePage(href) {
         else {
             pageContainer.currentPage = null;
         }
-
+    }
+    else if (isSogouTranslatePage(href)) {
+        pageContainer.currentPage = 'sogou';
+        pageContainer.insertEle = $("div.lang-select-box");
+        pageContainer.inputEdit = $("textarea#trans-input");
+        pageContainer.listenEleSelector = $("div#item");
+        pageContainer.helperBtnGroupEleText = '<div id="helper_btn_group" class="sogou"></div>';
+        pageContainer.formatBtnEleText = "<div id='format_function_btn' class='btn-base sogou'>格式化</div>";
+        pageContainer.copyTransBtnEleText = "<div id='copy_trans_function_btn' class='btn-base sogou' data-clipboard-action='copy'" +
+            " data-clipboard-target='div.output'>复制</div>";
     }
     else if (isPopupPage(href)) {
         pageContainer.currentPage = 'popup';
@@ -250,6 +271,7 @@ function activateFormatFunction(pageContainer, helperConfig) {
             var formattedText = handleTextFormat(originalText, helperConfig.formatFunction.formatConfig);
             pageContainer.inputEdit.val(formattedText);
             clickPerformanceAtEle(this, "格式化");
+            pageContainer.inputEdit.focus();
         });
     }
 
@@ -298,6 +320,7 @@ function activateFormatShortcutKeyFunction(pageContainer, helperConfig) {
         var originalText = pageContainer.inputEdit.val();
         var formattedText = handleTextFormat(originalText, helperConfig.formatFunction.formatConfig);
         pageContainer.inputEdit.val(formattedText);
+        pageContainer.inputEdit.focus();
     });
 }
 
@@ -310,7 +333,7 @@ function activateForceFunction(pageContainer, helperConfig) {
     $(document).bind('keydown', "backspace", function () {
         // 按下backspace键（删除键）可将焦点回到输入框。
         if (!pageContainer.inputEdit.is(":focus")) {
-            var text = inputEdit.val();
+            var text = pageContainer.inputEdit.val();
             pageContainer.inputEdit.focus();
             setTimeout(function () {
                 pageContainer.inputEdit.val(text)

@@ -10,8 +10,8 @@ function getFormatConfigFromPopupPage() {
         'formatRemainEmptyCRLF': $('#format_remain_empty_CRLF').prop('checked'),
         'formatSpaceTo1': $('#format_space_to_1').prop('checked'),
         'formatChineseCustomSpace': $('#format_chinese_custom_space').prop('checked'),
-        'formatAddCRLFAtEnd': $('#format_add_CRLF_at_end').prop('checked')
-
+        'formatAddCRLFAtEnd': $('#format_add_CRLF_at_end').prop('checked'),
+        'formatRemainTwoCRLFAtEnd': $("#format_remain_two_CRLF_at_end").prop('checked')
     };
     return formatConfig;
 }
@@ -29,6 +29,7 @@ function setFormatConfigToPopupPage(formatConfig) {
     $('#format_space_to_1').prop('checked', formatConfig.formatSpaceTo1);
     $('#format_chinese_custom_space').prop('checked', formatConfig.formatChineseCustomSpace);
     $('#format_add_CRLF_at_end').prop('checked', formatConfig.formatAddCRLFAtEnd);
+    $('#format_remain_two_CRLF_at_end').prop('checked', formatConfig.formatRemainTwoCRLFAtEnd);
 
 }
 
@@ -101,7 +102,7 @@ $(document).ready(function () {
     registerClearFunctionBtn(pageContainer);
     loadHelperConfigFromChrome(function (helperConfig) {
         setFormatConfigToPopupPage(helperConfig.formatFunction.formatConfig);
-        registerFormatShortcutKey(pageContainer,helperConfig);
+        registerFormatShortcutKey(pageContainer, helperConfig);
     });
     registerFormatBtn(pageContainer);
     registerCopyFunctionBtn(pageContainer);

@@ -113,6 +113,15 @@
 #copy_trans_function_btn.googleNew1 {
 }
 
+#helper_btn_group.googleNew2 {
+    position: inherit;
+    height: 27px;
+    line-height: 27px;
+    float: right;
+    margin-top: 0;
+    margin-right: 40px;
+}
+
 #format_function_btn.youdao, #copy_trans_function_btn.youdao {
     font-size: 16px;
     vertical-align: middle;
@@ -126,6 +135,16 @@
     line-height: 30px;
     float: none;
 }
+
+#helper_btn_group.sogou {
+    position: absolute;
+    height: 27px;
+    line-height: 27px;
+    float: right;
+    margin-top: 7px;
+    /*margin-right: 40px;*/
+}
+
 
 /*#format_function_btn:hover, #copy_trans_function_btn:hover {*/
 /*background-color: lavender;*/

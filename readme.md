@@ -23,15 +23,32 @@
 2. 谷歌翻译：https://translate.google.cn/、https://translate.google.com.hk/、https://translate.google.com
 3. 有道翻译：http://fanyi.youdao.com/
 4. 必应翻译：https://cn.bing.com/translator/
+5. 搜狗翻译：https://translate.sogou.com/、https://fanyi.sogou.com/
+
+## 本插件更新地址
+
+Github地址：[https://github.com/And-ZJ/TranslateHelper](https://github.com/And-ZJ/TranslateHelper)
+
+Chrome网上应用店地址：[https://chrome.google.com/webstore/detail/翻译助手/ldhdmpimmbbjemmbklofidofnkgpakaa](https://chrome.google.com/webstore/detail/%E7%BF%BB%E8%AF%91%E5%8A%A9%E6%89%8B/ldhdmpimmbbjemmbklofidofnkgpakaa)
 
 ## 如何在线安装
 
 可能只有Chrome浏览器能直接从应用商店安装。
+
+注意，此方法需要您能够正常访问 Google，如果您无法访问下述安装地址，则可以尝试本地安装。
+
 步骤如下：
+
 1. 进入 [Chrome网上应用店安装地址](https://chrome.google.com/webstore/detail/%E7%BF%BB%E8%AF%91%E5%8A%A9%E6%89%8B/ldhdmpimmbbjemmbklofidofnkgpakaa) 。
 2. 点击“添加至Chrome”。
 3. 在弹出的“要添加‘翻译助手’吗？”的对话框中，选择“添加拓展程序”。
 4. 等待片刻安装完成。
+
+关于“解压缩失败”的问题说明：
+
+  在测试这个插件的时候，点击“添加至Chrome”，反复几次都提示“解压缩失败”。然后，上传新版本后，但应用店还没有更新到新版时，再次添加却又成功了，所以暂时无法确定这个问题是网络原因还是包确实有问题引起的。
+
+  如果您遇到了这个问题，可以在不同时间多尝试安装几次，或者，立即通过下方的联系方式中的邮箱反馈，非常感谢您的支持，谢谢。
 
 ## 如何在线更新
 
@@ -160,7 +177,6 @@
       如果刷新无效，可右键点击本插件图标，选择“选项”，选择不同的“嵌入模式”。
       若上述方法不能解决问题，可联系作者，或查看Github页面是否已更新版本。
 
-
 ## 不完善之处
 
 1. 使用复制功能时，若翻译结果中存在多行，则复制结果里会多出换行。
@@ -169,6 +185,7 @@
     但同时也注意到，如果中文和符号中间隔了空格的情况，并未处理。
 3. 如果原文含有 tab，tab 目前默认处理成4空格，如需保留tab，请在设置中关闭此选项。
 4. 抽了点时间，进行了大改，代码有点丑陋也没有经过充分测试，可能存在问题。
+5. 在部分翻译网页上，浏览器页面缩小之后，按钮布局可能存在问题。
 
 ## 使用到的其他库
 
@@ -196,6 +213,28 @@ Email：ZJ.Cosmos@gmail.com
 同时，也感谢其他小伙伴对本插件的关注和信任。
 
 ## 更新日志
+
+2020-11-07
+
+1. 更新版本号 0.8.3
+
+2. 添加对搜狗翻译网页的支持。使用“格式化”功能导致其内容改变后，可能无法自动翻译，需要手动在输入文本框中输入回车或空格等触发。
+
+3. 更新谷歌翻译网页的适配
+
+4. “格式化”功能新增选项：“在内容最后只保留2个换行符”，默认选中。
+
+5. 网页上使用“格式化”功能后，焦点会转到输入文本框的中。
+
+6. 修复在Chrome新版本上，点击拓展选项界面中的网页链接无法跳转的问题，现在默认打开新网页以进行跳转
+
+7. 已上传Chrome网上应用店，但是现在审核好像要花很久时间，不确定什么时候应用商店的版本能更新。
+
+2020-05-05
+
+1. 更新版本号 0.8.2
+
+2. 此版本仅用于在manifest中添加 update_url，用以提交到 Chrome 进行自动更新测试
 
 2020-04-28
 

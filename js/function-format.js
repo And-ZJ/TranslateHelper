@@ -146,6 +146,11 @@ function handleTextFormat_addCRLFAtEnd(text) {
     return text;
 }
 
+// 末尾保留2个换行符
+function handleTextFormat_remainTwoCRLFAtEnd(text) {
+    return text.replace(/[\r\n]{2,}$/g, '\n\n');
+}
+
 /**
  * “格式化”功能，对文本的处理函数。
  * @param {*} text 待处理的字符串
@@ -186,6 +191,10 @@ function handleTextFormat(text, formatConfig) {
     if (formatConfig.formatAddCRLFAtEnd) {
         text = handleTextFormat_addCRLFAtEnd(text);
         debugLog('formatAddCRLFAtEnd', text);
+    }
+    if (formatConfig.formatRemainTwoCRLFAtEnd){
+        text = handleTextFormat_remainTwoCRLFAtEnd(text);
+        debugLog('formatRemainTwoCRLFAtEnd', text);
     }
     return text;
 }

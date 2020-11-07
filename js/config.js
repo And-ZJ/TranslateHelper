@@ -1,7 +1,7 @@
 // 默认配置
 // 当前最新版本的配置
-var defaultHelperConfig_2020_04_20 = {
-    'version': '2020-04-20',
+var defaultHelperConfig_2020_11_07 = {
+    'version': '2020-11-07',
     'formatFunction': {
         'check': true,
         'formatConfig': {
@@ -13,8 +13,9 @@ var defaultHelperConfig_2020_04_20 = {
             'formatCRLFToSpace': true,
             'formatRemainEmptyCRLF': true,
             'formatSpaceTo1': true,
-            'formatChineseCustomSpace':true,
-            'formatAddCRLFAtEnd': true
+            'formatChineseCustomSpace': true,
+            'formatAddCRLFAtEnd': true,
+            "formatRemainTwoCRLFAtEnd": true
         },
         'pageSetting': {
             'google': {
@@ -46,6 +47,11 @@ var defaultHelperConfig_2020_04_20 = {
                 'check': true,
                 'mode': 'append',
                 'version': 'new1'
+            },
+            'sogou': {
+                'check': true,
+                'mode': 'append',
+                'version': 'new1'
             }
         }
     },
@@ -67,7 +73,7 @@ var defaultHelperConfig_2020_04_20 = {
     }
 };
 
-var defaultHelperConfig_Newest = defaultHelperConfig_2020_04_20;
+var defaultHelperConfig_Newest = defaultHelperConfig_2020_11_07;
 
 /**
  * 深拷贝
@@ -109,7 +115,7 @@ function deepCopy(obj, cache) {
 function convertToNewestHelperConfig(helperConfig) {
     if (typeof helperConfig.version !== "undefined" && helperConfig.version === defaultHelperConfig_Newest.version) {
         debugLog('version newest');
-        // 当前的版本2020-04-20
+        // 当前的版本2020-11-07
         return helperConfig;
     }
 
@@ -118,11 +124,22 @@ function convertToNewestHelperConfig(helperConfig) {
         debugLog('version old');
         console.log("翻译助手：您正在使用旧版配置，请通过保存按钮，保存新版配置");
         var newHelperConfig = deepCopy(helperConfig);
+        newHelperConfig.version = defaultHelperConfig_2020_04_20.version;
         newHelperConfig.formatFunction = helperConfig.replaceFunction;
         delete newHelperConfig.replaceFunction;
         newHelperConfig.formatShortcutKeyFunction = helperConfig.replaceKeyFunction;
         delete newHelperConfig.replaceKeyFunction;
         newHelperConfig.formatFunction.formatConfig = defaultHelperConfig_2020_04_20.formatFunction.formatConfig;
+        helperConfig = newHelperConfig;
+    }
+    if (typeof helperConfig.version !== "undefined" && helperConfig.version === defaultHelperConfig_2020_04_20.version) {
+        // 如果读到的config是 2020-04-20 版本，则转换到版本2020-11-07
+        debugLog('version ' + defaultHelperConfig_2020_04_20.version);
+        console.log("翻译助手：您正在使用旧版配置，请通过保存按钮，保存新版配置");
+        var newHelperConfig = deepCopy(helperConfig);
+        newHelperConfig.formatFunction.formatConfig.formatRemainTwoCRLFAtEnd =
+            defaultHelperConfig_2020_11_07.formatFunction.formatConfig.formatRemainTwoCRLFAtEnd;
+        newHelperConfig.formatFunction.pageSetting.sogou = defaultHelperConfig_2020_11_07.formatFunction.pageSetting.sogou;
         helperConfig = newHelperConfig;
     }
     return helperConfig;
@@ -183,6 +200,73 @@ var defaultConfig_old = {
         }
     },
     'replaceKeyFunction': {
+        'check': true,
+        'keyValue': "ctrl+/"
+    },
+    'copyTransFunction': {
+        'check': true
+    },
+    'forceFunction': {
+        'check': false
+    },
+    'speechFunction': {
+        'check': false
+    },
+    'clearFunction': {
+        'check': false
+    }
+};
+
+var defaultHelperConfig_2020_04_20 = {
+    'version': '2020-04-20',
+    'formatFunction': {
+        'check': true,
+        'formatConfig': {
+            'formatTabToSpace': true,
+            'formatLineStartChar': false,
+            'lineStartCharList': '%#/',
+            'formatLineEndChar': false,
+            'lineEndCharList': '',
+            'formatCRLFToSpace': true,
+            'formatRemainEmptyCRLF': true,
+            'formatSpaceTo1': true,
+            'formatChineseCustomSpace': true,
+            'formatAddCRLFAtEnd': true
+        },
+        'pageSetting': {
+            'google': {
+                'check': true,
+                'mode': 'append',
+                'version': 'new1'
+            },
+            'googleCN': {
+                'check': true,
+                'mode': 'append',
+                'version': 'new1'
+            },
+            'googleCNHK': {
+                'check': true,
+                'mode': 'append',
+                'version': 'new1'
+            },
+            'baidu': {
+                'check': true,
+                'mode': 'append',
+                'version': 'new1'
+            },
+            'youdao': {
+                'check': true,
+                'mode': 'append',
+                'version': 'new1'
+            },
+            'bing': {
+                'check': true,
+                'mode': 'append',
+                'version': 'new1'
+            }
+        }
+    },
+    'formatShortcutKeyFunction': {
         'check': true,
         'keyValue': "ctrl+/"
     },

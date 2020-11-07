@@ -17,9 +17,11 @@
 <body>
 <ul class="list-group forbid-user-select">
     <li class="list-group-item allow-user-select">
-        <div><span>作者邮箱：</span><a href="mailto:ZJ.Cosmos@gmail.com" class="">ZJ.Cosmos@gmail.com</a><span>。更多内容请访问：</span><a href="https://github.com/And-ZJ/TranslateHelper">Github</a>，
-            <a href="https://chrome.google.com/webstore/detail/%E7%BF%BB%E8%AF%91%E5%8A%A9%E6%89%8B/ldhdmpimmbbjemmbklofidofnkgpakaa">谷歌网上应用店</a><span>。</span>
-            </div>
+        <div><span>作者邮箱：</span><a class="" target="_blank">ZJ.Cosmos@gmail.com</a><span>。更多内容请访问：</span><a
+                href="https://github.com/And-ZJ/TranslateHelper" target="_blank">Github</a>，
+            <a href="https://chrome.google.com/webstore/detail/%E7%BF%BB%E8%AF%91%E5%8A%A9%E6%89%8B/ldhdmpimmbbjemmbklofidofnkgpakaa"
+               target="_blank">谷歌网上应用店</a><span>。</span>
+        </div>
     </li>
     <li class="list-group-item">
         <div><label><input id="format_function" type="checkbox"/> 格式化功能</label>
@@ -83,16 +85,22 @@
                     </div>
                 </div>
                 <div>
-                    <label><input id="format_add_CRLF_at_end" type="checkbox"/> 在文本框最后添加单个空格和换行符</label>
+                    <label><input id="format_add_CRLF_at_end" type="checkbox"/> 在内容最后添加单个空格和换行符</label>
                     <div class="shape-circle" data-toggle="tooltip" data-placement="bottom"
                          title="省去粘贴下一段文字时，可能需要手动输入空格或换行的不便">?
+                    </div>
+                </div>
+                <div>
+                    <label><input id="format_remain_two_CRLF_at_end" type="checkbox"/> 在内容最后只保留2个换行符</label>
+                    <div class="shape-circle" data-toggle="tooltip" data-placement="bottom"
+                         title="在多于2个换行符时，将删除多于的换行符">?
                     </div>
                 </div>
             </li>
             <li class="list-group-item">
                 <div class="translate_page_setting google">
                     <input type="checkbox" class="check"/>
-                    <span class="name"><a href="https://translate.google.com/">谷歌翻译</a></span>
+                    <span class="name"><a href="https://translate.google.com/" target="_blank">谷歌翻译</a></span>
                     <label>嵌入模式：<select class="mode">
                         <option value="append">append模式</option>
                         <option value="html">html模式</option>
@@ -108,7 +116,7 @@
             <li class="list-group-item">
                 <div class="translate_page_setting googleCN">
                     <input type="checkbox" class="check"/>
-                    <span class="name"><a href="https://translate.google.cn/">谷歌翻译中国区</a></span>
+                    <span class="name"><a href="https://translate.google.cn/" target="_blank">谷歌翻译中国区</a></span>
                     <label>嵌入模式：<select class="mode">
                         <option value="append">append模式</option>
                         <option value="html">html模式</option>
@@ -124,7 +132,7 @@
             <li class="list-group-item">
                 <div class="translate_page_setting googleCNHK">
                     <input type="checkbox" class="check"/>
-                    <span class="name"><a href="https://translate.google.com.hk/">谷歌翻译中国香港区</a></span>
+                    <span class="name"><a href="https://translate.google.com.hk/" target="_blank">谷歌翻译中国香港区</a></span>
                     <label>嵌入模式：<select class="mode">
                         <option value="append">append模式</option>
                         <option value="html">html模式</option>
@@ -140,7 +148,7 @@
             <li class="list-group-item">
                 <div class="translate_page_setting baidu">
                     <input type="checkbox" class="check"/>
-                    <span class="name"><a href="https://fanyi.baidu.com/">百度翻译</a></span>
+                    <span class="name"><a href="https://fanyi.baidu.com/" target="_blank">百度翻译</a></span>
                     <label>嵌入模式：<select class="mode">
                         <option value="append">append模式</option>
                         <option value="html">html模式</option>
@@ -151,7 +159,7 @@
             <li class="list-group-item">
                 <div class="translate_page_setting youdao">
                     <input type="checkbox" class="check"/>
-                    <span class="name"><a href="http://fanyi.youdao.com/">有道翻译</a></span>
+                    <span class="name"><a href="http://fanyi.youdao.com/" target="_blank">有道翻译</a></span>
                     <label>嵌入模式：<select class="mode">
                         <option value="append">append模式</option>
                         <option value="html">html模式</option>
@@ -162,7 +170,18 @@
             <li class="list-group-item">
                 <div class="translate_page_setting bing">
                     <input type="checkbox" class="check"/>
-                    <span class="name"><a href="https://cn.bing.com/translator/">必应翻译</a></span>
+                    <span class="name"><a href="https://cn.bing.com/translator/" target="_blank">必应翻译</a></span>
+                    <label>嵌入模式：<select class="mode">
+                        <option value="append">append模式</option>
+                        <option value="html">html模式</option>
+                    </select>
+                    </label>
+                </div>
+            </li>
+            <li class="list-group-item">
+                <div class="translate_page_setting sogou">
+                    <input type="checkbox" class="check"/>
+                    <span class="name"><a href="https://translate.sogou.com/" target="_blank">搜狗翻译</a></span>
                     <label>嵌入模式：<select class="mode">
                         <option value="append">append模式</option>
                         <option value="html">html模式</option>
@@ -193,7 +212,7 @@
         <div><label><input id="force_function" type="checkbox"/> 按backspace键焦点回到输入框功能</label></div>
     </li>
     <li class="list-group-item">
-        <div><label><input id="speech_function" type="checkbox"/> 先按tab键，再按enter键可发音功能</label></div>
+        <div><label><input id="speech_function" type="checkbox"/> 先按tab键，再按enter键可发音功能（此功能在部分翻译网页下已失效）</label></div>
     </li>
     <li class="list-group-item">
         <div><label><input id="clear_function" type="checkbox"/> 同时按下shift+backspace键，清空输入框功能</label></div>

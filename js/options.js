@@ -167,6 +167,8 @@ function setHelperConfigToOptionsPage(helperConfig) {
     $('#force_function').prop("checked", helperConfig.forceFunction.check);
     $('#speech_function').prop("checked", helperConfig.speechFunction.check);
     $('#clear_function').prop("checked", helperConfig.clearFunction.check);
+
+    $('#speech_function').prop("checked", false);
 }
 
 

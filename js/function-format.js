@@ -89,21 +89,24 @@ function handleTextFormat_lineEndChar(text, lineEndCharList) {
 // 将换行符转换空格
 function handleTextFormat_CRLFToSpace(text, formatRemainEmptyCRLF) {
     var buffer = '';
+    if (!formatRemainEmptyCRLF){
+        text = text.replace(/\n/g, ' ');
+        return text;
+    }
     var lines = text.split('\n');
     lines.forEach(function (line, lineNum) {
         buffer += line;
         if (lineNum !== lines.length - 1) {
             // 上述判断是防止在最后一行添加了空格，因为最后一行的最后并没有换行符，所以不能加空格
-            if (formatRemainEmptyCRLF && line.trim().length === 0) {
+            if (line.trim().length === 0) {
                 // 保留空行，在该行非空字串长度为0的情况下。
                 buffer += '\n';
                 if (lineNum >= 1 && lines[lineNum - 1].trim().length > 0) {
                     // 如果该行的前一行非空，应该再添加一个换行符，否则实现不了保留空行的效果。
                     buffer += '\n';
                 }
-            }
-            else {
-                // 呃，在不保留空行的情况下，可以直接用正则实现。这里可能做得麻烦点了。
+            } else if (lineNum < lines.length -1 && lines[lineNum + 1].trim().length !== 0) {
+                // 下一行不为空行，则加上空格。因为要用空格连接不为空行的两行。
                 buffer += ' ';
             }
         }

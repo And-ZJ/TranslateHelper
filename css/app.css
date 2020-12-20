@@ -137,11 +137,11 @@
 }
 
 #helper_btn_group.sogou {
-    position: absolute;
+    position: relative;
     height: 27px;
     line-height: 27px;
-    float: right;
-    margin-top: 7px;
+    float: none;
+    margin-top: 0;
     /*margin-right: 40px;*/
 }
 

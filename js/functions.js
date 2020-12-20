@@ -272,6 +272,9 @@ function activateFormatFunction(pageContainer, helperConfig) {
             pageContainer.inputEdit.val(formattedText);
             clickPerformanceAtEle(this, "格式化");
             pageContainer.inputEdit.focus();
+            // 尝试自动触发改变，好像并没有什么用。
+            pageContainer.inputEdit.change();
+            pageContainer.inputEdit[0].dispatchEvent(new Event('input'));
         });
     }
 
@@ -321,6 +324,8 @@ function activateFormatShortcutKeyFunction(pageContainer, helperConfig) {
         var formattedText = handleTextFormat(originalText, helperConfig.formatFunction.formatConfig);
         pageContainer.inputEdit.val(formattedText);
         pageContainer.inputEdit.focus();
+        pageContainer.inputEdit.change();
+        pageContainer.inputEdit[0].dispatchEvent(new Event('input'));
     });
 }
 

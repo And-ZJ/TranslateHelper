@@ -210,7 +210,7 @@ function matchTranslatePage(href) {
         pageContainer.helperBtnGroupEleText = '<div id="helper_btn_group" class="sogou"></div>';
         pageContainer.formatBtnEleText = "<div id='format_function_btn' class='btn-base sogou'>格式化</div>";
         pageContainer.copyTransBtnEleText = "<div id='copy_trans_function_btn' class='btn-base sogou' data-clipboard-action='copy'" +
-            " data-clipboard-target='div.output'>复制</div>";
+            " data-clipboard-target='p#output-placeholder'>复制</div>";
     }
     else if (isPopupPage(href)) {
         pageContainer.currentPage = 'popup';

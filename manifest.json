@@ -45,9 +45,6 @@
   "options_ui": {
     "page": "html/options.html"
   },
-  "background": {
-    "service_worker": "js/background.js"
-  },
   "action": {
     "default_popup": "html/popup.html"
   },

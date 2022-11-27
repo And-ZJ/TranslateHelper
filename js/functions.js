@@ -116,7 +116,17 @@ function matchTranslatePage(href) {
         else if (isGoogleTranslatePage(href)) {
             pageContainer.currentPage = 'google';
         }
-        if ($("div.akczyd") !== null && $("div.akczyd").length !== 0) {
+        if ($("div.akczyd") !== null && $("div.akczyd").length !== 0 && $("span.HwtZe") !== null) {
+            // 谷歌翻译的新版页面，从2022-11-27开始（我发现的时间，不代表谷歌那边上线的时间）
+            pageContainer.insertEle = $("div.akczyd");
+            pageContainer.inputEdit = $("textarea.er8xn");
+            pageContainer.listenEleSelector = "button.VfPpkd-Bz112c-LgbsSe[aria-label='听取原文']";
+            pageContainer.helperBtnGroupEleText = '<div id="helper_btn_group" class="googleNew2"></div>';
+            pageContainer.formatBtnEleText = "<div id='format_function_btn' class='btn-base googleNew2'>格式化</div>";
+            pageContainer.copyTransBtnEleText = "<div id='copy_trans_function_btn' class='btn-base googleNew2' data-clipboard-action='copy'" +
+                " data-clipboard-target='span.HwtZe'>复制</div>";
+
+        } else if ($("div.akczyd") !== null && $("div.akczyd").length !== 0) {
             // 谷歌翻译的新版页面，从2020-11-07开始
             pageContainer.insertEle = $("div.akczyd");
             pageContainer.inputEdit = $("textarea.er8xn");

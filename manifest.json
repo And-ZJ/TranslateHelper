@@ -23,7 +23,7 @@
         "*://fanyi.sogou.com/*"
       ],
       "js": [
-        "js/jquery-3.3.1.min.js",
+        "js/jquery-3.5.0.min.js",
         "js/jquery.hotkeys.js",
         "js/clipboard.min.js",
         "js/debug.js",

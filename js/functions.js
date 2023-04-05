@@ -60,7 +60,7 @@ function isYouDaoTranslatePage(href) {
 }
 
 function isBingTranslatePage(href) {
-    return href.search("cn.bing.com/translator") > -1;
+    return href.search("cn.bing.com/translator") > -1 || href.search("bing.com/translator") > -1;
 }
 
 function isSogouTranslatePage(href) {
@@ -189,7 +189,16 @@ function matchTranslatePage(href) {
         // 必应翻译
         pageContainer.currentPage = 'bing';
         // console.log("翻译助手：必应翻译页面");
-        if ($(".t_inputoptions") !== null) {
+        if ($(".t_secOptions.b_clearfix") !== null) {
+            // 2023-4-5 发现的新版（不代表必应那边上线时间）
+            pageContainer.insertEle = $(".t_secOptions.b_clearfix");
+            pageContainer.inputEdit = $("textarea#tta_input_ta");
+            pageContainer.listenEleSelector = ".t_secOptions #tta_playiconsrc";
+            pageContainer.helperBtnGroupEleText = '<div id="helper_btn_group" class="bingNew1"></div>';
+            pageContainer.formatBtnEleText = "<div id='format_function_btn' class='btn-base bingNew1'>格式化</div>";
+            pageContainer.copyTransBtnEleText = "<div id='copy_trans_function_btn' class='btn-base bingNew1' data-clipboard-action='copy'" +
+                " data-clipboard-target='#tta_output_ta'>复制</div>";
+        } else if ($(".t_inputoptions") !== null) {
             // 2020-04-21 发现的新版
             pageContainer.insertEle = $(".t_inputoptions");
             pageContainer.inputEdit = $("textarea#tta_input_ta");
@@ -248,7 +257,7 @@ function insertHelperBtnGroup(pageContainer, helperConfig) {
             pageContainer.insertEle.append(pageContainer.helperBtnGroupEleText);
         }
         else if (mode === "html") {
-            pageContainer.insertEle.html(insertEle.html() + pageContainer.helperBtnGroupEleText)
+            pageContainer.insertEle.html(pageContainer.insertEle.html() + pageContainer.helperBtnGroupEleText)
         }
         pageContainer.helperBtnGroupEle = $('#helper_btn_group');
     }
@@ -393,7 +402,7 @@ function activateClearFunction(pageContainer, helperConfig) {
 // 向翻译页面启动翻译助手
 function activateTranslateHelper(pageContainer) {
     debugLog(pageContainer);
-    if (typeof pageContainer !== "undefined" || pageContainer !== null) {
+    if (typeof pageContainer !== "undefined" && pageContainer !== null) {
         // 加载配置
         loadHelperConfigFromChrome(function (helperConfig) {
             debugLog(helperConfig);

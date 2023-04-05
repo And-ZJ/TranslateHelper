@@ -19,6 +19,7 @@
         "*://translate.google.com.hk/*",
         "*://fanyi.youdao.com/*",
         "*://cn.bing.com/translator/*",
+        "*://www.bing.com/translator*",
         "*://translate.sogou.com/*",
         "*://fanyi.sogou.com/*"
       ],

@@ -530,3 +530,8 @@ function activateTranslateHelper(pageContainer) {
         console.log("翻译助手：未能识别的页面。")
     }
 }
+
+// 去掉页面上的按钮
+function inactiveTranslateHelper() {
+    $("#helper_btn_group").remove();
+}

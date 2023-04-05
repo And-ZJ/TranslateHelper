@@ -243,13 +243,25 @@ function matchTranslatePage(href) {
         // 有道翻译
         pageContainer.currentPage = 'youdao';
         // console.log("翻译助手：有道翻译页面");
-        pageContainer.insertEle = $(".fanyi__operations--left");
-        pageContainer.inputEdit = $("textarea#inputOriginal");
-        pageContainer.listenEleSelector = null;
-        pageContainer.helperBtnGroupEleText = '<div id="helper_btn_group" class="youdao"></div>';
-        pageContainer.formatBtnEleText = "<div id='format_function_btn' class='btn-base youdao'>格式化</div>";
-        pageContainer.copyTransBtnEleText = "<div id='copy_trans_function_btn' class='btn-base youdao' data-clipboard-action='copy'" +
-            " data-clipboard-target='#transTarget'>复制</div>";
+        if ($(".languageSelector.languageSelector-web") !== null && $(".languageSelector.languageSelector-web").length !== 0) {
+            pageContainer.insertEle = $(".languageSelector.languageSelector-web");
+            pageContainer.inputEdit = $("#js_fanyi_input");
+            pageContainer.listenEleSelector = null;
+            pageContainer.helperBtnGroupEleText = '<div id="helper_btn_group" class="youdao"></div>';
+            pageContainer.formatBtnEleText = "<div id='format_function_btn' class='btn-base youdao'>格式化</div>";
+            pageContainer.copyTransBtnEleText = "<div id='copy_trans_function_btn' class='btn-base youdao' data-clipboard-action='copy'" +
+                " data-clipboard-target='#js_fanyi_output_resultOutput'>复制</div>";
+        } else if ($(".fanyi__operations--left")!== null && $(".fanyi__operations--left").length !== 0) {
+            pageContainer.insertEle = $(".fanyi__operations--left");
+            pageContainer.inputEdit = $("textarea#inputOriginal");
+            pageContainer.listenEleSelector = null;
+            pageContainer.helperBtnGroupEleText = '<div id="helper_btn_group" class="youdao"></div>';
+            pageContainer.formatBtnEleText = "<div id='format_function_btn' class='btn-base youdao'>格式化</div>";
+            pageContainer.copyTransBtnEleText = "<div id='copy_trans_function_btn' class='btn-base youdao' data-clipboard-action='copy'" +
+                " data-clipboard-target='#transTarget'>复制</div>";
+        } else {
+            pageContainer.currentPage = null;
+        }
         // 有道翻译页面未找到发音按钮
         console.log("翻译助手：有道翻译页面未找到发音按钮");
     }

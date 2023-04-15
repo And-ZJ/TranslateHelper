@@ -127,7 +127,13 @@ function PageContainer() {
                 return;
             }
             this.pageContainer.inputEdit.change();
-            this.pageContainer.inputEdit[0].dispatchEvent(new Event('input'));
+            // 参考自 https://blog.csdn.net/weixin_54051261/article/details/125752218
+            var inputEditHtml = this.pageContainer.inputEdit[0];
+            let event = new Event("input", {bubbles: true});
+            //  React15
+            event.simulated = true;
+            inputEditHtml.dispatchEvent(event);
+            this.pageContainer.inputEdit.focus();
         },
         "call": function () {
             if (!isNullField(this.custom)) {

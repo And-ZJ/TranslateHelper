@@ -76,9 +76,67 @@ function isPopupPage(href) {
         && href.search("popup.html") > -1;
 }
 
+function isNullField(field) {
+    return field === undefined || field === null
+}
 // 用于容纳与翻译页面相关的元素
 function PageContainer() {
     this.currentPage = null;
+    // 获取页面上原文输入框中的数据，返回字符串。
+    this.readInputEditText = {
+        "pageContainer": this,
+        // custom 是提供给不同页面自定义操作的接口
+        "custom": null,
+        "default": function () {
+            if (isNullField(this.pageContainer.inputEdit)) {
+                return "";
+            }
+            return this.pageContainer.inputEdit.val();
+        },
+        "call": function () {
+            if (!isNullField(this.custom)) {
+                return this.custom();
+            }
+            return this.default();
+        },
+    };
+    // 将数据写入页面上原文输入框，参数为字符串。
+    this.writeInputEditText = {
+        "pageContainer": this,
+        "custom": null,
+        "default": function (text) {
+            if (isNullField(this.pageContainer.inputEdit)) {
+                return;
+            }
+            this.pageContainer.inputEdit.val(text);
+        },
+        "call": function (text) {
+            if (!isNullField(this.custom)) {
+                this.custom(text);
+                return;
+            }
+            this.default(text);
+        },
+    };
+    // 触发页面上原文输入框内容改变的事件
+    this.triggerInputEditChange = {
+        "pageContainer": this,
+        "custom": null,
+        "default": function () {
+            if (isNullField(this.pageContainer.inputEdit)) {
+                return;
+            }
+            this.pageContainer.inputEdit.change();
+            this.pageContainer.inputEdit[0].dispatchEvent(new Event('input'));
+        },
+        "call": function () {
+            if (!isNullField(this.custom)) {
+                this.custom();
+                return;
+            }
+            this.default();
+        },
+    };
 }
 
 PageContainer.prototype.isTranslateWebPage = function () {
@@ -305,14 +363,13 @@ function activateFormatFunction(pageContainer, helperConfig) {
         console.log("翻译助手：若未出现‘格式化’按钮，请右键点击本插件图标，在“选项”中尝试使用其他方式。");
         pageContainer.formatBtnEle.click(function () {
             // 点击“格式化”按钮
-            var originalText = pageContainer.inputEdit.val();
+            var originalText = pageContainer.readInputEditText.call();
             var formattedText = handleTextFormat(originalText, helperConfig.formatFunction.formatConfig);
-            pageContainer.inputEdit.val(formattedText);
+            pageContainer.writeInputEditText.call(formattedText);
             clickPerformanceAtEle(this, "格式化");
             pageContainer.inputEdit.focus();
             // 尝试自动触发改变，好像并没有什么用。
-            pageContainer.inputEdit.change();
-            pageContainer.inputEdit[0].dispatchEvent(new Event('input'));
+            pageContainer.triggerInputEditChange.call();
         });
     }
 

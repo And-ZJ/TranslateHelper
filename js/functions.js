@@ -303,7 +303,17 @@ function matchTranslatePage(href) {
             pageContainer.helperBtnGroupEleText = '<div id="helper_btn_group" class="DeepL"></div>';
             pageContainer.formatBtnEleText = "<div id='format_function_btn' class='btn-base DeepL'>格式化</div>";
             pageContainer.copyTransBtnEleText = "<div id='copy_trans_function_btn' class='btn-base DeepL' data-clipboard-action='copy'" +
-                " data-clipboard-target='#target-dummydiv'>复制</div>";
+                " data-clipboard-target='#target-dummydiv' style='display: none'>复制</div>";
+            pageContainer.readInputEditText.custom = function () {
+                var text = "";
+                this.pageContainer.inputEdit.children().each(function(){
+                    text += $(this).text() + "\n";
+                });
+                return text;
+            }
+            pageContainer.writeInputEditText.custom = function (text) {
+                this.pageContainer.inputEdit.text(text)
+            }
             console.log("翻译助手：DeepL翻译页面未找到原文发音按钮");
         } else {
             pageContainer.currentPage = null;

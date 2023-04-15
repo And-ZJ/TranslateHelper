@@ -21,7 +21,8 @@
         "*://cn.bing.com/translator/*",
         "*://www.bing.com/translator*",
         "*://translate.sogou.com/*",
-        "*://fanyi.sogou.com/*"
+        "*://fanyi.sogou.com/*",
+        "*://www.deepl.com/translator*"
       ],
       "js": [
         "js/jquery-3.5.0.min.js",

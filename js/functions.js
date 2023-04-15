@@ -67,6 +67,10 @@ function isSogouTranslatePage(href) {
     return href.search("translate.sogou.com") > -1 || href.search("fanyi.sogou.com") > -1;
 }
 
+function isDeepLTranslatePage(href) {
+    return href.search("deepl.com/translator") > -1;
+}
+
 function isPopupPage(href) {
     return href.search("chrome-extension") > -1
         && href.search("popup.html") > -1;
@@ -231,7 +235,22 @@ function matchTranslatePage(href) {
         pageContainer.copyTransBtnEleText = "<div id='copy_trans_function_btn' class='btn-base sogou' data-clipboard-action='copy'" +
             " data-clipboard-target='p#output-placeholder'>复制</div>";
     }
-    else if (isPopupPage(href)) {
+    else if (isDeepLTranslatePage(href)) {
+        if ($(".lmt__language_container #source_language_label") !== null && $(".lmt__language_container #source_language_label").length !== 0) {
+            // DeepL
+            pageContainer.currentPage = 'DeepL';
+            pageContainer.insertEle = $(".lmt__language_container #source_language_label").parent();
+            pageContainer.inputEdit = $(".lmt__inner_textarea_container d-textarea.lmt__source_textarea div");
+            pageContainer.listenEleSelector = null;
+            pageContainer.helperBtnGroupEleText = '<div id="helper_btn_group" class="DeepL"></div>';
+            pageContainer.formatBtnEleText = "<div id='format_function_btn' class='btn-base DeepL'>格式化</div>";
+            pageContainer.copyTransBtnEleText = "<div id='copy_trans_function_btn' class='btn-base DeepL' data-clipboard-action='copy'" +
+                " data-clipboard-target='#target-dummydiv'>复制</div>";
+            console.log("翻译助手：DeepL翻译页面未找到原文发音按钮");
+        } else {
+            pageContainer.currentPage = null;
+        }
+    } else if (isPopupPage(href)) {
         pageContainer.currentPage = 'popup';
         pageContainer.insertEle = null;
         pageContainer.inputEdit = $("textarea#input_text_area");

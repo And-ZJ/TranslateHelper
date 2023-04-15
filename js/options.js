@@ -94,6 +94,11 @@ function getHelperConfigFromOptionsPage() {
                     'check': $('.translate_page_setting.sogou .check').prop('checked'),
                     'mode': $('.translate_page_setting.sogou .mode').val(),
                     'version': 'new1'
+                },
+                'DeepL': {
+                    'check': $('.translate_page_setting.DeepL .check').prop('checked'),
+                    'mode': $('.translate_page_setting.DeepL .mode').val(),
+                    'version': 'new1'
                 }
             }
         },
@@ -160,6 +165,9 @@ function setHelperConfigToOptionsPage(helperConfig) {
     $('.translate_page_setting.sogou .check').prop("checked", helperConfig.formatFunction.pageSetting.sogou.check);
     $(".translate_page_setting.sogou .mode").find("option[value='" + helperConfig.formatFunction.pageSetting.sogou.mode + "']").prop("selected", true);
     // $('.translate_page_setting.sogou .version').find("option[value='" + helperConfig.formatFunction.pageSetting.sogou.version + "']").prop("selected", true);
+
+    $('.translate_page_setting.DeepL .check').prop("checked", helperConfig.formatFunction.pageSetting.DeepL.check);
+    $(".translate_page_setting.DeepL .mode").find("option[value='" + helperConfig.formatFunction.pageSetting.DeepL.mode + "']").prop("selected", true);
 
     $('#format_shortcut_key_function').prop("checked", helperConfig.formatShortcutKeyFunction.check);
     $('#key_value').val(helperConfig.formatShortcutKeyFunction.keyValue);

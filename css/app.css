@@ -145,6 +145,14 @@
     /*margin-right: 40px;*/
 }
 
+#helper_btn_group.DeepL {
+    position: relative;
+    height: 27px;
+    line-height: 27px;
+    float: none;
+    margin-top: 0;
+    /*margin-right: 40px;*/
+}
 
 /*#format_function_btn:hover, #copy_trans_function_btn:hover {*/
 /*background-color: lavender;*/

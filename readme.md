@@ -31,10 +31,11 @@
 ## 可使用的网页翻译页面
 
 1. 百度翻译：https://fanyi.baidu.com/
-2. 谷歌翻译：https://translate.google.cn/、https://translate.google.com.hk/、https://translate.google.com
+2. 谷歌翻译：https://translate.google.cn/ 、 https://translate.google.com.hk/ 、 https://translate.google.com
 3. 有道翻译：http://fanyi.youdao.com/
 4. 必应翻译：https://cn.bing.com/translator/
-5. 搜狗翻译：https://translate.sogou.com/、https://fanyi.sogou.com/
+5. 搜狗翻译：https://translate.sogou.com/ 、 https://fanyi.sogou.com/
+6. DeepL翻译：https://www.deepl.com/translator
 
 ## 本插件更新地址
 

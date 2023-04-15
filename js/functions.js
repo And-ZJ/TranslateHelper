@@ -320,6 +320,13 @@ function matchTranslatePage(href) {
             pageContainer.writeInputEditText.custom = function (text) {
                 this.pageContainer.inputEdit.text(text)
             }
+            // 如下方式并不能按预期生效，注释掉
+            // pageContainer.triggerInputEditChange.custom = function () {
+            //     this.default();
+            //     // 观察到DeepL页面上将如果将焦点转移，则DeepL会识别到输入框被修改，因此采用此触发方式。
+            //     $(".lmt__inner_textarea_container d-textarea.lmt__target_textarea div").focus();
+            //     this.pageContainer.inputEdit.focus();
+            // }
             console.log("翻译助手：DeepL翻译页面未找到原文发音按钮");
         } else {
             pageContainer.currentPage = null;

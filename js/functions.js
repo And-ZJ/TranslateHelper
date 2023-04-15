@@ -242,6 +242,13 @@ function matchTranslatePage(href) {
     else if (isYouDaoTranslatePage(href)) {
         // 有道翻译
         pageContainer.currentPage = 'youdao';
+        pageContainer.readInputEditText.custom = function () {
+            return this.pageContainer.inputEdit.html();
+        }
+        pageContainer.writeInputEditText.custom = function (text) {
+            this.pageContainer.inputEdit.html(
+                '<span class="src" data-group="0-0">' + text + '</span>')
+        }
         // console.log("翻译助手：有道翻译页面");
         if ($(".languageSelector.languageSelector-web") !== null && $(".languageSelector.languageSelector-web").length !== 0) {
             pageContainer.insertEle = $(".languageSelector.languageSelector-web");
